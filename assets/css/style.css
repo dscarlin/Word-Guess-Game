@@ -11,7 +11,7 @@ html, body{
     background-size:contain;
     overflow:hidden;
     height: 100vh;
-    
+    min-height: 600px;
     width:100vw;
     
    
@@ -134,9 +134,28 @@ h3{
 @media only screen and (max-width: 1100px ){
     
     .grass{height:100vh;}
+    #figcaption{ left:30vw;}
 }
 @media only screen and (max-width: 500px){
     .dinopic:hover + #figcaption, #figcaption:hover { right: 100vw; transform:scale(1.15);}
     .dinopic{width:50vw;}
+    #figcaption{
+        left:30vw;
+    }
 }
-
+@media only screeen and (max-width: 4000px){
+    .grass {
+        height:140vh;
+    }
+}
+@media only screeen and (max-width: 2000px){
+    #figcaption {
+        left: 30vw;
+    }
+}
+@media only screeen and (max-height: 650px){
+    .dinopad{
+        display:none;
+    }
+    }
+/*this media query at the end isn't working. arg!/*
