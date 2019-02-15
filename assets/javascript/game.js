@@ -1,4 +1,18 @@
-let wins = 0;
+const figcaption = document.getElementById('figcaption');
+const dinopic = document.getElementById('dinopic');
+    figcaption.onmouseover = function(){
+        dinopic.style.transform = " scale(2)";}
+    figcaption.onmouseout = function(){
+        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";}
+    
+    dinopic.onmouseover = function(){
+        document.querySelector('audio').play();
+        dinopic.style.transform = "scale(2)";}
+    dinopic.onmouseout = function(){
+        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";}
+
+
+
 
 const dinosaurCollection = {
     'TYRANNOSAURUS':'assets/images/tyrannosaurus.jpg',
@@ -11,10 +25,12 @@ const dinosaurCollection = {
     'APATOSAURUS':'assets/images/apatosaurus.jpeg',
     'OVIRAPTOR':'assets/images/oviraptor.jpeg',
     'ALBERTOSAURUS':'assets/images/albertosaurus.jpeg'};
+let wins = 0;
 let guessLetters;
 let guesses;
 let newWord;
 let hangWord;
+let oldWords =[];
 function set(){
     //letters already guessed
     guessLetters = [];
@@ -34,6 +50,19 @@ function set(){
     //choose random word from wordbank
     newWord = wordBank[rand];
     console.log("bank index and new word: " +rand +" "+ newWord);
+    //Make sure that the same word is not chosen within 3 rounds
+    function noRepeats(){
+        if (oldWords.indexOf(newWord) != -1){
+            newWord = wordBank[rand + 1];
+            rand++
+            noRepeats();}
+    }
+    console.log("untrimmed: "+ oldWords);
+    if (oldWords.length > 5)
+        oldWords.shift();
+    console.log("trimmed: "+ oldWords);
+    //Re-assign oldWord to new word for comparison next round
+    oldWords.push(newWord);
     //hangman blanks node access variable
     hangWord = document.querySelector('.hangword');
     //clear hangword div
@@ -112,8 +141,8 @@ document.onkeyup = function(event){
                 wins++;
                 //print wins
                 document.querySelector('.wins').innerHTML = wins;
-                document.querySelector('.dinopic').innerHTML = '<img class="img-responsive"  width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>'
-                document.getElementById('figcaption').innerHTML = newWord
+                document.querySelector('.dinopic').innerHTML = '<img class="img-responsive"  width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
+                document.getElementById('figcaption').innerHTML = newWord;
                 console.log(newWord)
                 set();
                 

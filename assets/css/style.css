@@ -1,3 +1,4 @@
+
 .col{
     border: green dotted .5em;
     bottom:22vh;
@@ -20,7 +21,7 @@ html, body{
     padding: 0;
     transform:rotateX(60deg);
 /*     position:absolute; */
-    height:90vh;
+    height:70vh;
     display:inline-block;
 /*     position: fixed; */
     left: 0;
@@ -47,12 +48,11 @@ html, body{
 /*     trasform-origin: center; */
     transform: rotateY(60deg) ;
     position:absolute;
-    bottom:5vh;
+    bottom:10vh;
     z-index:1;
     left:20vw;
     transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg);
-   
-  
+    transition: .7s;
     display:inline-block;
    
 
@@ -61,18 +61,12 @@ html, body{
     position:relative;
     top:1vh
 }
-img{
-    
-/*     transform:rotateY(30deg); */
-    transition:  all .5s ease;
-    
+
+.dinopad{
+    height:auto;
+    widht:fit-content;
 }
 
-.dinopic:hover, #figcaption:hover {
-    
-    
-    transform:scale(2);
-} 
 h1{
     top: 5vh; 
     font-family: 'Hanalei Fill',arial;
@@ -107,13 +101,42 @@ h3{
     z-index: 10;
     transform: rotateX(60deg) rotateZ(-30deg);
     position: absolute;
-    bottom:2vh;
-    left:30vw;
-    font-size:2em;
+    bottom:7vh;
+    left:25vw;
+    font-size:1.5em;
+    transition: .3s;
 
 
 }
 
-@media only screen and (max width: 500px){
-    .col{color:blue;}
+
+.dinopic:hover + #figcaption, #figcaption:hover {
+     transform: scale(1.4);
+     bottom:5vh;
+     right:80vw;
+     transform-origin:right;
+     color:orange;
+     text-decoration:underline;
+     background:#0f77d24d;
+     width:fit-content;
+/*      border-radius: 6em;
+     padding: 5em; */
+     
+    
+} 
+@media only screen and ( max-width: 900px ){
+    
+    .dinopic:hover + #figcaption, #figcaption:hover { transform:scale(1.4) }
+
+
 }
+    
+@media only screen and (max-width: 1100px ){
+    
+    .grass{height:100vh;}
+}
+@media only screen and (max-width: 500px){
+    .dinopic:hover + #figcaption, #figcaption:hover { right: 100vw; transform:scale(1.15);}
+    .dinopic{width:50vw;}
+}
+
