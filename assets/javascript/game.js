@@ -1,6 +1,16 @@
 let wins = 0;
 
-const wordBank = ['TYRANNOSAURUS','DIMETRODON','SPINOSAURUS','BRACHIOSAURUS','STEGOSAURUS','VELOCIRAPTOR','DIPLODOCUS','APATOSAURUS','OVIRAPTOR','ALBERTOSAURUS'];
+const dinosaurCollection = {
+    'TYRANNOSAURUS':'assets/images/tyrannosaurus.jpg',
+    'DIMETRODON':'assets/images/dimetrodon.png',
+    'SPINOSAURUS':'assets/images/spinosaurus.jpg',
+    'BRACHIOSAURUS':'assets/images/brachiosaurus.jpeg',
+    'STEGOSAURUS':'assets/images/stegosaurus.jpeg',
+    'VELOCIRAPTOR':'assets/images/velociraptor.jpeg',
+    'DIPLODOCUS':'assets/images/diplodocus.jpeg',
+    'APATOSAURUS':'assets/images/apatosaurus.jpeg',
+    'OVIRAPTOR':'assets/images/oviraptor.jpeg',
+    'ALBERTOSAURUS':'assets/images/albertosaurus.jpeg'};
 let guessLetters;
 let guesses;
 let newWord;
@@ -9,13 +19,18 @@ function set(){
     //letters already guessed
     guessLetters = [];
     //clear guess letter div
-    document.querySelector('.letters').innerHTML= guessLetters;
-    //random number variable for index of wordBank
-    const rand = Math.floor(Math.random()*wordBank.length);
+    document.querySelector('.letters').innerHTML= "Letters Already Guessed: " + guessLetters;
     //starting guesses
     guesses = 12;
     //print starting guesses
-    document.querySelector('.guesses').innerHTML= guesses;
+    document.querySelector('.guesses').innerHTML= "Guesses Left: " + guesses;
+    //define array for dinosaur names
+    const wordBank = []
+    //populate array for accessing random dinosaur name
+    for (var key in dinosaurCollection)
+        wordBank.push(key);
+    //random number variable for index of wordBank
+    const rand = Math.floor(Math.random()*wordBank.length);
     //choose random word from wordbank
     newWord = wordBank[rand];
     console.log("bank index and new word: " +rand +" "+ newWord);
@@ -52,11 +67,12 @@ document.onkeyup = function(event){
                     //decrement guesses since letter has not been guessed already
                     guesses--;
                     //print number of guesses left
-                    document.querySelector('.guesses').innerHTML= guesses;
+                    document.querySelector('.guesses').innerHTML= "Guesses Left: " + guesses;
                     //add letter to array of guessed letters
                     guessLetters.push(capLetter);
                     //print array of guessed letters 
-                    document.querySelector('.letters').innerHTML= guessLetters;
+                    document.querySelector('.letters').innerHTML= "Letters Already Guessed: " + guessLetters;
+                    //starting guesses
                 }
             }
         }//letter is in newWord
@@ -96,6 +112,9 @@ document.onkeyup = function(event){
                 wins++;
                 //print wins
                 document.querySelector('.wins').innerHTML = wins;
+                document.querySelector('.dinopic').innerHTML = '<img class="img-responsive"  width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>'
+                document.getElementById('figcaption').innerHTML = newWord
+                console.log(newWord)
                 set();
                 
 

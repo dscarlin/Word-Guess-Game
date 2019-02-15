@@ -1,5 +1,119 @@
-.col-sm-4{
-    border: green inset 1em;
+.col{
+    border: green dotted .5em;
+    bottom:22vh;
+    color: white;
+    font-size: 1.25em;
+    top:1vh;
 }
-body{
+html, body{
+    background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40 );
+    background-size:contain;
+    overflow:hidden;
+    height: 100vh;
+    
+    width:100vw;
+    
+   
+}
+.grass{
+    background-image: url('../images/grass.jpg');
+    padding: 0;
+    transform:rotateX(60deg);
+/*     position:absolute; */
+    height:90vh;
+    display:inline-block;
+/*     position: fixed; */
+    left: 0;
+     width: 100%;
+
+    
+   
+   
+}
+
+#placeholder{
+    visibility:hidden;;
+    width: 100%;
+/*     position: fixed;
+    left:0;
+    bottom:0; */
+    display: inline-block;
+  
+
+}
+.dinopic{
+    width: 30vh;
+    height: auto;
+/*     trasform-origin: center; */
+    transform: rotateY(60deg) ;
+    position:absolute;
+    bottom:5vh;
+    z-index:1;
+    left:20vw;
+    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg);
+   
+  
+    display:inline-block;
+   
+
+}
+.header{
+    position:relative;
+    top:1vh
+}
+img{
+    
+/*     transform:rotateY(30deg); */
+    transition:  all .5s ease;
+    
+}
+
+.dinopic:hover, #figcaption:hover {
+    
+    
+    transform:scale(2);
+} 
+h1{
+    top: 5vh; 
+    font-family: 'Hanalei Fill',arial;
+   font-size: 15vw;
+   background: linear-gradient(blue, yellow);
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+   
+
+}
+
+
+h3{
+    font-size:15vw;
+   
+    color: #5f1804;
+/*     display:inline; */
+    position:absolute;
+    bottom:1vh;
+    left:30vw;
+
+    transform: rotateZ(-20deg) rotateY(30deg);
+    opacity: .6;
+
+    font-family: 'Shadows Into Light', 'cursive';
+     
+     
+}
+
+#figcaption{
+    color:white;
+    z-index: 10;
+    transform: rotateX(60deg) rotateZ(-30deg);
+    position: absolute;
+    bottom:2vh;
+    left:30vw;
+    font-size:2em;
+
+
+}
+
+@media only screen and (max width: 500px){
+    .col{color:blue;}
 }
