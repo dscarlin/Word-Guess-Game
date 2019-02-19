@@ -77,7 +77,8 @@ function set(){
     console.log("new word after blanks: "+ newWord);
     let str = "";
     document.ontouchstart = function(){		
-        document.getElementById('dummy').focus()};
+        document.getElementById('dummy').focus()
+        alert("this Worked!")};
     document.getElementById('dummy').focus();
 
 }
