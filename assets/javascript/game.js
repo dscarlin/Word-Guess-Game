@@ -76,9 +76,9 @@ function set(){
     };
     console.log("new word after blanks: "+ newWord);
     let str = "";
-    document.onclick = function(){		
+    document.ontouchstart = function(){		
         document.getElementById('dummy').focus()};
-    document.getElementById('dummy').focus().click();
+    document.getElementById('dummy').focus();
 
 }
 set()
