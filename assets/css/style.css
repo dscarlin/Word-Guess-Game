@@ -28,7 +28,7 @@ html, body{
      width: 100%; 
 }
 #dummy{
-   visibility:hidden;
+   opacity: 0;
    } 
 #placeholder{
     visibility:hidden;;
