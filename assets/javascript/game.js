@@ -1,15 +1,33 @@
 const figcaption = document.getElementById('figcaption');
 const dinopic = document.getElementById('dinopic');
+const dinopad = document.querySelector('.dinopad');
     figcaption.onmouseover = function(){
-        dinopic.style.transform = " scale(2)";}
+        dinopic.firstChild.style.width= "40vw";
+        dinopic.style.transition = ".6s";
+        dinopic.style.transform = "rotate(0)";
+        dinopic.style.right = "10rem"
+        dinopad.style.bottom = "20rem";
+        }
     figcaption.onmouseout = function(){
-        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";}
+        dinopic.firstChild.style.width= "20rem";
+        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
+        dinopic.style.right = "unset";
+        dinopad.style.bottom = "unset";
+    }
     
     dinopic.onmouseover = function(){
+        dinopic.firstChild.style.width= "40vw";
         document.querySelector('audio').play();
-        dinopic.style.transform = "scale(2)";}
+        dinopic.style.transform = "rotate(0)"
+        dinopic.style.right = "10rem"
+        dinopad.style.bottom = "20rem";
+        }
     dinopic.onmouseout = function(){
-        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";}
+        dinopic.firstChild.style.width= "20rem";
+        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
+        dinopic.style.right = "unset";
+        dinopad.style.bottom = "unset";
+    }
 
 
 
@@ -77,14 +95,14 @@ function set(){
     console.log("new word after blanks: "+ newWord);
     let str = "";
     document.ontouchstart = function(){		
-        document.getElementById('dummy').focus()
+        document.getElementById('hangword').focus()
        };
-    // document.getElementById('dummy').focus();
+    
 
 }
 set()
 //main function for key events
-document.onkeyup = function keyHandle(event){
+document.onkeyup = function (event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
@@ -149,7 +167,7 @@ document.onkeyup = function keyHandle(event){
                 wins++;
                 //print wins
                 document.querySelector('.wins').innerHTML = wins;
-                document.querySelector('.dinopic').innerHTML = '<img class="img-responsive"  width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
+                document.getElementById('dinopic').innerHTML = '<img   width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
                 document.getElementById('figcaption').innerHTML = newWord;
                 console.log(newWord)
                 set();

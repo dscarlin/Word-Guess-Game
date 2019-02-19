@@ -1,18 +1,18 @@
 
 .col{
     border: green dotted .5em;
-    bottom:22vh;
     color: white;
     font-size: 1.25em;
     top:1vh;
 }
-html, body{
+
+ body{
     background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40 );
     background-size:contain;
-    overflow:hidden;
-    height: 100vh;
-    min-height: 600px;
-    width:100vw;
+    overflow:auto;
+    min-width: 320px;
+    min-height: 400px;
+
     
    
 }
@@ -20,49 +20,44 @@ html, body{
     background-image: url('../images/grass.jpg');
     padding: 0;
     transform:rotateX(60deg);
+    transform-origin:bottom;
 /*     position:absolute; */
-    height:70vh;
+/*     height:70vh; */
     display:inline-block;
 /*     position: fixed; */
-    left: 0;
-     width: 100%; 
+    
+     
+     position: static; 
+     bottom:0;
+     height: 100vh;
+
 }
 #dummy{
    opacity: 0;
+   caret-color: transparent;
    } 
-#placeholder{
-    visibility:hidden;;
-    width: 100%;
-/*     position: fixed;
-    left:0;
-    bottom:0; */
-    display: inline-block;
-  
 
-}
-.dinopic{
-    width: 30vh;
-    height: auto;
-/*     trasform-origin: center; */
-    transform: rotateY(60deg) ;
-    position:absolute;
-    bottom:10vh;
-    z-index:1;
-    left:20vw;
-    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg);
-    transition: .7s;
-    display:inline-block;
-   
 
-}
+
+
 .header{
     position:relative;
-    top:1vh
+    top:1vh;
+
 }
 
 .dinopad{
     height:auto;
-    widht:fit-content;
+    max-width: 100vw;
+    position:relative;
+    transition: .6s;
+    
+    
+    
+}
+
+#dinopic{
+    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1);
 }
 
 h1{
@@ -93,67 +88,77 @@ h3{
      
      
 }
+img{
+    width: 20rem;
+}
 
 #figcaption{
     color:white;
-    z-index: 10;
-    transform: rotateX(60deg) rotateZ(-30deg);
-    position: absolute;
-    bottom:7vh;
-    left:25vw;
-    font-size:1.5em;
-    transition: .3s;
+    z-index: 1;
+    transform: rotateX(60deg) rotateZ(-30deg) ;
+    margin-top: 1rem;
+/*     position:absolute; */
+    bottom:0;
+/*     top: 30rem; */
+/*     transform-origin: unset;    */
+/*     left:25vw; */
+    
+    font-size: 10vw;
+    transition: .6s;
+         width:fit-content;
+
 
 
 }
 
 
 .dinopic:hover + #figcaption, #figcaption:hover {
-     transform: scale(1.4);
-     bottom:5vh;
-     right:80vw;
-     transform-origin:right;
+     transform: scale(1);
+     positon:absolute;
+/*      bottom:0; */
+/*      transition: .6s; */
+/*      bottom:5vh; */
      color:orange;
      text-decoration:underline;
      background:#0f77d24d;
-     width:fit-content;
-/*      border-radius: 6em;
-     padding: 5em; */
-     
-    
+}
+ /*   
 } 
-@media only screen and ( max-width: 900px ){
-    
-    .dinopic:hover + #figcaption, #figcaption:hover { transform:scale(1.4) }
-
-
-}
-    
-@media only screen and (max-width: 1100px ){
-    
-    .grass{height:100vh;}
-    #figcaption{ left:30vw;}
-}
-@media only screen and (max-width: 500px){
-    .dinopic:hover + #figcaption, #figcaption:hover { right: 100vw; transform:scale(1.15);}
-    .dinopic{width:50vw;}
-    #figcaption{
-        left:30vw;
-    }
-}
 @media only screeen and (max-width: 4000px){
     .grass {
         height:140vh;
-    }
+    } 
 }
 @media only screeen and (max-width: 2000px){
     #figcaption {
         left: 30vw;
     }
 }
+@media only screen and (max-width: 1100px ){
+    
+     .grass{height:100vh;} 
+    #figcaption{ left:30vw;}
+}
+@media only screen and ( max-width: 900px ){
+    
+    #dinopic:hover + #figcaption, #figcaption:hover { transform:scale(1.4) }
+
+
+}
 @media only screeen and (max-height: 650px){
-    .dinopad{
+     .dinopad{
         display:none;
+    } 
     }
+    
+
+@media only screen and (max-width: 500px){
+    #dinopic:hover + #figcaption, #figcaption:hover { right: 100vw; transform:scale(1.15);}
+    #dinopic{width:50vw;}
+    #figcaption{
+        left:30vw;
     }
-/*this media query at the end isn't working. arg!/*
+}
+
+
+
