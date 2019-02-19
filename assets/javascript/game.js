@@ -46,17 +46,20 @@ function set(){
     for (var key in dinosaurCollection)
         wordBank.push(key);
     //random number variable for index of wordBank
-    const rand = Math.floor(Math.random()*wordBank.length);
+    let rand = Math.floor(Math.random()*wordBank.length);
     //choose random word from wordbank
     newWord = wordBank[rand];
     console.log("bank index and new word: " +rand +" "+ newWord);
     //Make sure that the same word is not chosen within 3 rounds
     function noRepeats(){
         if (oldWords.indexOf(newWord) != -1){
+            console.log("THIS IS THE INDEX OF NEW WORD: "+ oldWords.indexOf(newWord))
             newWord = wordBank[rand + 1];
             rand++
             noRepeats();}
     }
+    noRepeats();
+    console.log(newWord);
     console.log("untrimmed: "+ oldWords);
     if (oldWords.length > 5)
         oldWords.shift();
@@ -73,6 +76,10 @@ function set(){
     };
     console.log("new word after blanks: "+ newWord);
     let str = "";
+    document.onclick = function(){		
+        document.getElementById('dummy').focus()};
+    document.getElementById('dummy').focus();
+
 }
 set()
 //main function for key events

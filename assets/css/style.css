@@ -25,13 +25,13 @@ html, body{
     display:inline-block;
 /*     position: fixed; */
     left: 0;
-     width: 100%;
-
-    
-   
-   
+     width: 100%; 
 }
-
+#dummy{
+    position:absolute;
+    left:-200px;
+    top:0px;
+   }
 #placeholder{
     visibility:hidden;;
     width: 100%;
