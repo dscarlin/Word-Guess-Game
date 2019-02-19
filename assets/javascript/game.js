@@ -99,9 +99,11 @@ function set(){
 
 }
 set()
-document.getElementById('hangword').focus();
-document.ontouchstart = function(){		
-    document.getElementById('hangword').focus()
+//initialize keyboard on opening
+document.getElementById('dummy').focus();
+//initialize keyboard on touching hangword div
+document.getElementById('hangword').ontouchstart = function(){		
+    document.getElementById('dummy').focus()
    };
 //main function for key events
 document.onkeyup = function (event){
