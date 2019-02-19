@@ -94,13 +94,15 @@ function set(){
     };
     console.log("new word after blanks: "+ newWord);
     let str = "";
-    document.ontouchstart = function(){		
-        document.getElementById('hangword').focus()
-       };
+    
     
 
 }
 set()
+document.getElementById('hangword').focus();
+document.ontouchstart = function(){		
+    document.getElementById('hangword').focus()
+   };
 //main function for key events
 document.onkeyup = function (event){
     console.log("event key:"+ event.key);
