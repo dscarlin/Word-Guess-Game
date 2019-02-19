@@ -78,7 +78,7 @@ function set(){
     let str = "";
     document.onclick = function(){		
         document.getElementById('dummy').focus()};
-    document.getElementById('dummy').focus();
+    document.getElementById('dummy').focus().click();
 
 }
 set()
