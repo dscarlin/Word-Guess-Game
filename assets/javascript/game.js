@@ -79,12 +79,12 @@ function set(){
     document.ontouchstart = function(){		
         document.getElementById('dummy').focus()
         alert("this Worked!")};
-    document.getElementById('dummy').focus();
+    // document.getElementById('dummy').focus();
 
 }
 set()
 //main function for key events
-document.onkeyup = function(event){
+document.onkeyup = function keyHandle(event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
