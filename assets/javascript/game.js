@@ -75,7 +75,7 @@ alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open
 const figcaption = document.getElementById('figcaption');
 const dinopic = document.getElementById('dinopic');
 const dinopad = document.querySelector('.dinopad');
-dinopad.onmouseover = function(){
+function dinoAction(){
     dinopic.style.transition = ".6s";
     dinopic.style.transform = "scale(1.4)";
     figcaption.style.color = "orange";
@@ -85,7 +85,10 @@ dinopad.onmouseover = function(){
     dinopad.style.bottom = "5rem";
     // document.querySelector('audio').play();
 }
-dinopad.onmouseout = function(){
+dinopad.addEventListener('mouseover', dinoAction);
+dinopad.addEventListener('focus', dinoAction);
+
+function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
     figcaption.style.color = "white";
     figcaption.style.textDecoration = "unset";
@@ -93,8 +96,11 @@ dinopad.onmouseout = function(){
     figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
     dinopad.style.bottom = "unset";
 }
+dinopad.addEventListener('mouseout', dinoReturn);
+dinopad.addEventListener('blur', dinoReturn );
 
-dinopic.onclick = function(){document.querySelector('audio').play();};
+
+dinopic.ondblclick = function(){document.querySelector('audio').play();};
 document.querySelector('audio').play();
 
 
@@ -105,7 +111,8 @@ document.querySelector('.hangword').ontouchend = function(){
     document.getElementById('dummy').focus()
    };
 //main function for key events
-document.onkeyup = function (event){
+document.oninput = function(){
+document.onkeyup = function(event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
@@ -180,6 +187,6 @@ document.onkeyup = function (event){
             }
         }
     }
-}
+}}
 
 
