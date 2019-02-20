@@ -86,8 +86,8 @@ function dinoAction(){
     // document.querySelector('audio').play();
 }
 dinopad.addEventListener('mouseover', dinoAction);
-dinopad.addEventListener('touchstart', dinoAction);
-document.body.addEventListener('touchstart', function(){dinopad.blur()});
+dinopic.addEventListener('touchstart', dinoAction + document.querySelector('audio').play());
+document.body.addEventListener('touchstart', function(){dinopic.blur()});
 
 function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
@@ -98,7 +98,7 @@ function dinoReturn(){
     dinopad.style.bottom = "unset";
 }
 dinopad.addEventListener('mouseout', dinoReturn);
-dinopad.addEventListener('blur', dinoReturn );
+dinopic.addEventListener('blur', dinoReturn );
 
 
 dinopic.ondblclick = function(){document.querySelector('audio').play();};
