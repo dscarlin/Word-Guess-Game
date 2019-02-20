@@ -155,10 +155,11 @@ dinopad.addEventListener('mouseout', dinoReturn);
 dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
-dinopic.addEventListener('touchend', dinoAction);
+dinopad.addEventListener('touchstart', dinoAction);
 document.body.ontouchstart = function(){ dinopad.blur()};
-dinopic.addEventListener('blur', dinoReturn );
-dinopic.addEventListener('touchend', roar);
+dinopad.addEventListener('blur', dinoReturn );
+dinopad.addEventListener('touchend', roar);
+
 
 //Gameplay
 //main function for key events
