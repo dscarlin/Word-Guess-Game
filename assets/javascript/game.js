@@ -142,7 +142,7 @@ const event = document.event;
 set()
 alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open your keypad.')
 roar();
-//document.getElementById('dummy').focus()
+document.getElementById('dummy').focus()
 //initialize keyboard on touching hangword div -- mobile
 hangWord.addEventListener('touchend', openKeyboard)
 
