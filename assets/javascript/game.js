@@ -144,7 +144,7 @@ alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open
 roar();
 document.getElementById('dummy').focus()
 //initialize keyboard on touching hangword div -- mobile
-hangWord.addEventListener('touchend', openKeyboard)
+hangWord.addEventListener('touchend', openKeyboard);
 
 
 
@@ -156,7 +156,7 @@ dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
 dinopad.addEventListener('touchstart', dinoAction);
-document.body.addEventListener('touchstart', dinoRetun);
+document.body.addEventListener('touchstart', dinoReturn);
 //dinopad.addEventListener('touchend', dinoReturn );
 dinopad.addEventListener('touchstart', roar);
 
