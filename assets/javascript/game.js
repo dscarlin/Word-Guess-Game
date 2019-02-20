@@ -86,8 +86,8 @@ function dinoAction(){
     // document.querySelector('audio').play();
 }
 dinopad.addEventListener('mouseover', dinoAction);
-dinopad.addEventListener('focus', dinoAction);
-document.addEventListener('focus', dinoReturn);
+dinopad.addEventListener('touchstart', dinoAction);
+document.addEventListener('touchstart', dinoReturn);
 
 function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
@@ -98,7 +98,7 @@ function dinoReturn(){
     dinopad.style.bottom = "unset";
 }
 dinopad.addEventListener('mouseout', dinoReturn);
-dinopad.addEventListener('blur', dinoReturn );
+//dinopad.addEventListener('blur', dinoReturn );
 
 
 dinopic.ondblclick = function(){document.querySelector('audio').play();};
@@ -108,7 +108,7 @@ document.querySelector('audio').play();
 //initialize keyboard on opening
 document.getElementById('dummy').focus();
 //initialize keyboard on touching hangword div
-document.querySelector('.col').ontouchend = function(){		
+    document.querySelector('.hangword').ontouchend = function(){		
     document.getElementById('dummy').focus()
    };
 
