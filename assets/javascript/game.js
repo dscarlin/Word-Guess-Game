@@ -88,7 +88,7 @@ function dinoAction(){
 dinopad.addEventListener('mouseover', dinoAction);
 dinopic.addEventListener('touchstart', dinoAction);
 dinopic.addEventListener('touchend', function(){document.querySelector('audio').play()});
-document.addEventListener('touchstart', function(){dinopic.blur()});
+document.body.ontouchstart = function(){dinopic.blur()};
 function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
     figcaption.style.color = "white";
