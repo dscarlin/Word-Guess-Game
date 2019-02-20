@@ -163,7 +163,7 @@ dinopad.addEventListener('touchstart', roar);
 
 //Gameplay
 //main function for key events
-document.addEventListener('keyup', function (event){
+document.onkeyup = function (event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
@@ -236,7 +236,7 @@ document.addEventListener('keyup', function (event){
                 }
             }
         }
-    })
+    }
 
 
 
