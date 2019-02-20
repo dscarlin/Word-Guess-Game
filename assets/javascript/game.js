@@ -107,12 +107,11 @@ document.querySelector('audio').play();
 //initialize keyboard on opening
 document.getElementById('dummy').focus();
 //initialize keyboard on touching hangword div
-document.querySelector('.hangword').ontouchend = function(){		
+document.querySelector('.col').ontouchend = function(){		
     document.getElementById('dummy').focus()
    };
 //main function for key events
-document.oninput = function(){
-document.onkeyup = function(event){
+window.onkeyup = function(event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
@@ -187,6 +186,6 @@ document.onkeyup = function(event){
             }
         }
     }
-}}
+}
 
 
