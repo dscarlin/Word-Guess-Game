@@ -86,7 +86,8 @@ function dinoAction(){
     // document.querySelector('audio').play();
 }
 dinopad.addEventListener('mouseover', dinoAction);
-dinopic.addEventListener('touchstart', dinoAction + document.querySelector('audio').play());
+dinopic.addEventListener('touchstart', dinoAction);
+dinopic.addEventListener(document.querySelector('audio').play());
 document.body.addEventListener('touchstart', function(){dinopic.blur()});
 
 function dinoReturn(){
