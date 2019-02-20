@@ -144,7 +144,7 @@ alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open
 roar();
 document.getElementById('dummy').focus()
 //initialize keyboard on touching hangword div -- mobile
-hangWord.addEventListener('touchend', openKeyboard)
+//hangWord.addEventListener('touchend', openKeyboard)
 
 
 
