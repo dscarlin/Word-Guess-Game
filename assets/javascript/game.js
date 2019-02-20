@@ -86,9 +86,9 @@ function dinoAction(){
     // document.querySelector('audio').play();
 }
 dinopad.addEventListener('mouseover', dinoAction);
-dinopic.addEventListener('touchend', dinoAction);
+dinopic.addEventListener('touchstart', dinoAction);
 dinopic.addEventListener('touchend', function(){document.querySelector('audio').play()});
-document.addEventListener('touchend', function(){dinopic.blur()});
+document.addEventListener('touchstart', function(){dinopic.blur()});
 function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
     figcaption.style.color = "white";
