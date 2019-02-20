@@ -1,5 +1,8 @@
+//------------------------------------------GLOBAL VARIABLES-------------------------------------------------//
 
 
+//--------------game data----------------//
+//collection of dinosaur names and related data
 const dinosaurCollection = {
     'TYRANNOSAURUS':'assets/images/tyrannosaurus.jpg',
     'DIMETRODON':'assets/images/dimetrodon.png',
@@ -12,108 +15,154 @@ const dinosaurCollection = {
     'OVIRAPTOR':'assets/images/oviraptor.jpeg',
     'ALBERTOSAURUS':'assets/images/albertosaurus.jpeg'};
 
+//define array for dinosaur names
+const wordBank = []
+
+
+
+//-----------gameplay variables-----------//
 let wins = 0;
-let guessLetters;
+//letters already guessed
+let guessLetters = [];
+//number of guesses left per round
 let guesses;
+//word chosen from wordBank
 let newWord;
-let hangWord;
+//words from previous (up to 5) rounds
 let oldWords =[];
 
+//-------------js DOM variables-------------//
+//hangman blanks node access variable
+const hangWord = document.querySelector('.hangword');
+//caption for dinosaur pic
+const figcaption = document.getElementById('figcaption');
+//div that dinosaur pic img element is placed in
+const dinopic = document.getElementById('dinopic');
+//div that dinopic and caption are inside of
+const dinopad = document.querySelector('.dinopad');
+//audio element
+const audio = document.querySelector('audio');
+//div for displaying wins 
+const winsDiv = document.querySelector('.wins');
+const event = document.event;
 
 
-function set(){
-    //letters already guessed
-    guessLetters = [];
-    //clear guess letter div
-    document.querySelector('.letters').innerHTML= "Letters Already Guessed: " + guessLetters;
-    //starting guesses
-    guesses = 12;
-    //print starting guesses
-    document.querySelector('.guesses').innerHTML= "Guesses Left: " + guesses;
-    //define array for dinosaur names
-    const wordBank = []
-    //populate array for accessing random dinosaur name
-    for (var key in dinosaurCollection)
-        wordBank.push(key);
-    //random number variable for index of wordBank
-    let rand = function(){ return Math.floor(Math.random()*wordBank.length);}
-    //choose random word from wordbank
-    newWord = wordBank[rand()];
-    console.log("bank index and new word: " + wordBank.indexOf(newWord) +" "+ newWord);
-    //Make sure that the same word is not chosen within 3 rounds
-    function noRepeats(){
-        if (oldWords.indexOf(newWord) != -1){
-            console.log("THIS IS THE INDEX OF NEW WORD: "+ oldWords.indexOf(newWord))
+//------------------------------------------ FUNCTIONS ------------------------------------------------//
+
+//-------------------functions for game set ------------//
+        //random number variable for index of wordBank
+        function rand(){return Math.floor(Math.random()*wordBank.length);
+            }
+
+
+        //makes sure no word is repeated in 5 rounds
+        function noRepeats(){
+            if (oldWords.indexOf(newWord) != -1){
+                console.log("THIS IS THE INDEX OF NEW WORD: "+ oldWords.indexOf(newWord));
+                newWord = wordBank[rand()];
+                noRepeats();}
+            }
+
+
+        //sets up game screen between rounds
+        function set(){
+            //clear guess letter div
+            document.querySelector('.letters').innerHTML= "Letters Already Guessed: " + guessLetters;
+            //starting guesses
+            guesses = 12;
+            //print starting guesses
+            document.querySelector('.guesses').innerHTML= "Guesses Left: " + guesses;
+            //populate array for accessing random dinosaur name
+            for (var key in dinosaurCollection)
+                wordBank.push(key);
+            //choose random word from wordbank
             newWord = wordBank[rand()];
-            noRepeats();}
-    }
-    noRepeats();
-    console.log(newWord);
-    console.log("untrimmed: "+ oldWords);
-    if (oldWords.length > 5)
-        oldWords.shift();
-    console.log("trimmed: "+ oldWords);
-    //Re-assign oldWord to new word for comparison next round
-    oldWords.push(newWord);
-    //hangman blanks node access variable
-    hangWord = document.querySelector('.hangword');
-    //clear hangword div
-    hangWord.innerHTML = "";
-    //build letter blanks for hangword
-    for (i=0;i<newWord.length;i++){
-        hangWord.innerHTML+=" _"
-    };
-    console.log("new word after blanks: "+ newWord);
-    let str = "";
-    }
+            console.log("bank index and new word: " + wordBank.indexOf(newWord) +" "+ newWord);
+            //Make sure that the same word is not chosen within 5 rounds 
+            noRepeats();
+            console.log(newWord);
+            console.log("untrimmed: "+ oldWords);
+            if (oldWords.length > 5)
+                oldWords.shift()
+            console.log("trimmed: "+ oldWords);
+            //Re-assign oldWord to new word for comparison next round
+            oldWords.push(newWord);
+            //clear hangword div
+            hangWord.innerHTML = "";
+            //build letter blanks for hangword
+            for (i=0;i<newWord.length;i++){
+                hangWord.innerHTML+=" _"
+            };
+            console.log("new word after blanks: "+ newWord);
+            let str = "";
+            }
+
+//---------------------functions for event listeners--------------//
+
+        //-------mobile keyboard initialize------//
+        
+        function openKeyboard(){
+            document.getElementById('dummy').focus()
+            };
+
+        //---auxilary UI event handler funcs----//
 
 
+        function dinoAction(){
+            dinopic.style.transition = ".6s";
+            dinopic.style.transform = "scale(1.4)";
+            figcaption.style.color = "orange";
+            figcaption.style.textDecoration = "underline";
+            figcaption.style.background = "#0f77d24d";
+            figcaption.style.transform = "rotate(0)"
+            dinopad.style.bottom = "5rem";
+            }
 
+        function dinoReturn(){
+            dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
+            figcaption.style.color = "white";
+            figcaption.style.textDecoration = "unset";
+            figcaption.style.background = "unset";
+            figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
+            dinopad.style.bottom = "unset";
+            }
+
+        function roar(){
+            audio.play()
+            }
+
+
+        //---------gameplay event func-----------//
+
+        
+        
+//-------------------------------------GAME PLAY ACTIONS----------------------------------------------//
+
+//Set Initial Board
 set()
 alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open your keypad.')
-//get elements for hover and click effects 
-const figcaption = document.getElementById('figcaption');
-const dinopic = document.getElementById('dinopic');
-const dinopad = document.querySelector('.dinopad');
-function dinoAction(){
-    dinopic.style.transition = ".6s";
-    dinopic.style.transform = "scale(1.4)";
-    figcaption.style.color = "orange";
-    figcaption.style.textDecoration = "underline";
-    figcaption.style.background = "#0f77d24d";
-    figcaption.style.transform = "rotate(0)"
-    dinopad.style.bottom = "5rem";
-    // document.querySelector('audio').play();
-}
+roar();
+
+//initialize keyboard on touching hangword div -- mobile
+hangWord.addEventListener('touchend', openKeyboard)
+
+
+
+
+//Auxillary UI experience -- cpu
 dinopad.addEventListener('mouseover', dinoAction);
-dinopic.addEventListener('touchend', dinoAction);
-dinopic.addEventListener('touchend', function(){document.querySelector('audio').play()});
-document.body.ontouchend = function(){dinopic.blur(); dinopad.blur()};
-function dinoReturn(){
-    dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
-    figcaption.style.color = "white";
-    figcaption.style.textDecoration = "unset";
-    figcaption.style.background = "unset";
-    figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
-    dinopad.style.bottom = "unset";
-}
 dinopad.addEventListener('mouseout', dinoReturn);
+dinopic.ondblclick = roar;
+
+//Auxillary UI experience -- mobile
+dinopic.addEventListener('touchend', dinoAction);
+document.body.ontouchstart = function(){ dinopad.blur()};
 dinopic.addEventListener('blur', dinoReturn );
+dinopic.addEventListener('touchend', roar);
 
-
-dinopic.ondblclick = function(){document.querySelector('audio').play();};
-document.querySelector('audio').play();
-
-
-
-//initialize keyboard on touching hangword div
-document.querySelector('.hangword').ontouchend = function(){		
-    document.getElementById('dummy').focus()
-   };
-
-
+//Gameplay
 //main function for key events
-document.onkeyup = function(event){
+document.addEventListener('keyup', function (event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
@@ -177,17 +226,24 @@ document.onkeyup = function(event){
                 //increment wins
                 wins++;
                 //print wins
-                document.querySelector('.wins').innerHTML = wins;
-                document.getElementById('dinopic').innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
-                document.getElementById('figcaption').innerHTML = newWord;
-                document.querySelector('audio').play();
+                winsDiv.innerHTML = wins;
+                dinopic.innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
+                figcaption.innerHTML = newWord;
+                roar();
                 console.log(newWord)
-                set();
-                
-
+                set();   
+                }
             }
         }
-    }
-}
+    })
+
+
+
+
+
+
+
+
+
 
 
