@@ -155,8 +155,8 @@ dinopad.addEventListener('mouseout', dinoReturn);
 dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
-dinopad.addEventListener('touchend', dinoAction);
-document.body.ontouchstart = function(){ dinopad.blur()};
+dinopad.addEventListener('touchstart', dinoAction);
+//document.body.ontouchstart = function(){ dinopad.blur()};
 //dinopad.addEventListener('touchend', dinoReturn );
 dinopad.addEventListener('touchstart', roar);
 
