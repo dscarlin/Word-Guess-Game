@@ -105,8 +105,7 @@ dinopic.ondblclick = function(){document.querySelector('audio').play();};
 document.querySelector('audio').play();
 
 
-//initialize keyboard on opening
-document.getElementById('dummy').focus();
+
 //initialize keyboard on touching hangword div
 document.querySelector('.hangword').ontouchend = function(){		
     document.getElementById('dummy').focus()
