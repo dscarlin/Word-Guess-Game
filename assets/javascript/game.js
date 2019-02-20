@@ -1,33 +1,46 @@
 const figcaption = document.getElementById('figcaption');
 const dinopic = document.getElementById('dinopic');
 const dinopad = document.querySelector('.dinopad');
-    figcaption.onmouseover = function(){
-        dinopic.firstChild.style.width= "40vw";
+    dinopad.onmouseover = function(){
+        event.stopImmediatePropagation();
+        
         dinopic.style.transition = ".6s";
-        dinopic.style.transform = "rotate(0)";
-        dinopic.style.right = "10rem"
-        dinopad.style.bottom = "20rem";
+        dinopic.style.transform = "scale(1.4)";
+        // dinopic.style.right = "10rem";
+        figcaption.style.color = "orange";
+        figcaption.style.textDecoration = "underline";
+        figcaption.style.background = "#0f77d24d";
+        figcaption.style.transform = "rotate(0)"
+        dinopad.style.bottom = "5rem";
+        document.querySelector('audio').play();
         }
-    figcaption.onmouseout = function(){
-        dinopic.firstChild.style.width= "20rem";
+    dinopad.onmouseout = function(){
+        event.stopImmediatePropagation();
         dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
-        dinopic.style.right = "unset";
+        // dinopic.style.right = "unset";
+        figcaption.style.color = "white";
+        figcaption.style.textDecoration = "unset";
+        figcaption.style.background = "unset";
+        figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
         dinopad.style.bottom = "unset";
     }
     
-    dinopic.onmouseover = function(){
-        dinopic.firstChild.style.width= "40vw";
-        document.querySelector('audio').play();
-        dinopic.style.transform = "rotate(0)"
-        dinopic.style.right = "10rem"
-        dinopad.style.bottom = "20rem";
-        }
-    dinopic.onmouseout = function(){
-        dinopic.firstChild.style.width= "20rem";
-        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
-        dinopic.style.right = "unset";
-        dinopad.style.bottom = "unset";
-    }
+    // dinopad.onmouseover = function(){
+    //     event.stopImmediatePropagation();
+    //     dinopic.firstChild.style.width= "40vw";
+    //     document.querySelector('audio').play();
+    //     dinopic.style.transform = "rotate(0)"
+    //     dinopic.style.right = "10rem"
+    //     dinopad.style.bottom = "20rem";
+    //     }
+    // dinopad.onmouseout = function(){
+    //     event.stopImmediatePropagation();
+
+    //     dinopic.firstChild.style.width= "20rem";
+    //     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
+    //     dinopic.style.right = "unset";
+    //     dinopad.style.bottom = "unset";
+    // }
 
 
 
@@ -64,16 +77,15 @@ function set(){
     for (var key in dinosaurCollection)
         wordBank.push(key);
     //random number variable for index of wordBank
-    let rand = Math.floor(Math.random()*wordBank.length);
+    let rand = function(){ return Math.floor(Math.random()*wordBank.length);}
     //choose random word from wordbank
-    newWord = wordBank[rand];
-    console.log("bank index and new word: " +rand +" "+ newWord);
+    newWord = wordBank[rand()];
+    console.log("bank index and new word: " + wordBank.indexOf(newWord) +" "+ newWord);
     //Make sure that the same word is not chosen within 3 rounds
     function noRepeats(){
         if (oldWords.indexOf(newWord) != -1){
             console.log("THIS IS THE INDEX OF NEW WORD: "+ oldWords.indexOf(newWord))
-            newWord = wordBank[rand + 1];
-            rand++
+            newWord = wordBank[rand()];
             noRepeats();}
     }
     noRepeats();
@@ -175,7 +187,7 @@ document.onkeyup = function (event){
                 wins++;
                 //print wins
                 document.querySelector('.wins').innerHTML = wins;
-                document.getElementById('dinopic').innerHTML = '<img   width="100%"src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
+                document.getElementById('dinopic').innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
                 document.getElementById('figcaption').innerHTML = newWord;
                 console.log(newWord)
                 set();
