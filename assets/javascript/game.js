@@ -87,6 +87,7 @@ function dinoAction(){
 }
 dinopad.addEventListener('mouseover', dinoAction);
 dinopad.addEventListener('focus', dinoAction);
+document.addEventListener('focus', dinoReturn);
 
 function dinoReturn(){
     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
@@ -110,8 +111,10 @@ document.getElementById('dummy').focus();
 document.querySelector('.col').ontouchend = function(){		
     document.getElementById('dummy').focus()
    };
+
+
 //main function for key events
-window.onkeyup = function(event){
+document.onkeyup = function(event){
     console.log("event key:"+ event.key);
     //capitalize key letter for comparison
     const capLetter = event.key.toUpperCase();
