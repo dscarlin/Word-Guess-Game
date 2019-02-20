@@ -156,7 +156,7 @@ dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
 dinopad.addEventListener('touchstart', dinoAction);
-document.body.ontouchstart = function(){ dinoRetun};
+document.body.addEventListener('touchstart', dinoRetun);
 //dinopad.addEventListener('touchend', dinoReturn );
 dinopad.addEventListener('touchstart', roar);
 
