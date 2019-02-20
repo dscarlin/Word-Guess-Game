@@ -1,48 +1,3 @@
-const figcaption = document.getElementById('figcaption');
-const dinopic = document.getElementById('dinopic');
-const dinopad = document.querySelector('.dinopad');
-    dinopad.onmouseover = function(){
-        event.stopImmediatePropagation();
-        
-        dinopic.style.transition = ".6s";
-        dinopic.style.transform = "scale(1.4)";
-        // dinopic.style.right = "10rem";
-        figcaption.style.color = "orange";
-        figcaption.style.textDecoration = "underline";
-        figcaption.style.background = "#0f77d24d";
-        figcaption.style.transform = "rotate(0)"
-        dinopad.style.bottom = "5rem";
-        document.querySelector('audio').play();
-        }
-    dinopad.onmouseout = function(){
-        event.stopImmediatePropagation();
-        dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
-        // dinopic.style.right = "unset";
-        figcaption.style.color = "white";
-        figcaption.style.textDecoration = "unset";
-        figcaption.style.background = "unset";
-        figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
-        dinopad.style.bottom = "unset";
-    }
-    
-    // dinopad.onmouseover = function(){
-    //     event.stopImmediatePropagation();
-    //     dinopic.firstChild.style.width= "40vw";
-    //     document.querySelector('audio').play();
-    //     dinopic.style.transform = "rotate(0)"
-    //     dinopic.style.right = "10rem"
-    //     dinopad.style.bottom = "20rem";
-    //     }
-    // dinopad.onmouseout = function(){
-    //     event.stopImmediatePropagation();
-
-    //     dinopic.firstChild.style.width= "20rem";
-    //     dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
-    //     dinopic.style.right = "unset";
-    //     dinopad.style.bottom = "unset";
-    // }
-
-
 
 
 const dinosaurCollection = {
@@ -56,12 +11,16 @@ const dinosaurCollection = {
     'APATOSAURUS':'assets/images/apatosaurus.jpeg',
     'OVIRAPTOR':'assets/images/oviraptor.jpeg',
     'ALBERTOSAURUS':'assets/images/albertosaurus.jpeg'};
+
 let wins = 0;
 let guessLetters;
 let guesses;
 let newWord;
 let hangWord;
 let oldWords =[];
+
+
+
 function set(){
     //letters already guessed
     guessLetters = [];
@@ -106,19 +65,43 @@ function set(){
     };
     console.log("new word after blanks: "+ newWord);
     let str = "";
-    
-    
+    }
 
-}
+
+
 set()
-// document.ontouchstart = function(){		
-//     document.getElementById('dummy').focus()
-//    };
+alert('Welcome to Dinosaur Hangman! For mobile => touch the empty blanks to open your keypad.')
+//get elements for hover and click effects 
+const figcaption = document.getElementById('figcaption');
+const dinopic = document.getElementById('dinopic');
+const dinopad = document.querySelector('.dinopad');
+dinopad.onmouseover = function(){
+    dinopic.style.transition = ".6s";
+    dinopic.style.transform = "scale(1.4)";
+    figcaption.style.color = "orange";
+    figcaption.style.textDecoration = "underline";
+    figcaption.style.background = "#0f77d24d";
+    figcaption.style.transform = "rotate(0)"
+    dinopad.style.bottom = "5rem";
+    // document.querySelector('audio').play();
+}
+dinopad.onmouseout = function(){
+    dinopic.style.transform = "rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1)";
+    figcaption.style.color = "white";
+    figcaption.style.textDecoration = "unset";
+    figcaption.style.background = "unset";
+    figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
+    dinopad.style.bottom = "unset";
+}
+
+dinopic.onclick = function(){document.querySelector('audio').play();};
+document.querySelector('audio').play();
+
 
 //initialize keyboard on opening
 document.getElementById('dummy').focus();
 //initialize keyboard on touching hangword div
-document.querySelector('.hangword').ontouchstart = function(){		
+document.querySelector('.hangword').ontouchend = function(){		
     document.getElementById('dummy').focus()
    };
 //main function for key events
@@ -129,7 +112,7 @@ document.onkeyup = function (event){
     console.log("capLetter: "+capLetter);
     //check that key pressed is aplphabetic and a single letter
     if  (capLetter.match(/[A-Z]{1,1}/) && capLetter.length<2){
-        //check if key letter is not in newWord
+        //check boolean that key letter is not in newWord
         if(newWord.indexOf(capLetter)==-1){
             //check boolean that the key letter has not been guessed already
             if(guessLetters.indexOf(capLetter)==-1){
@@ -189,6 +172,7 @@ document.onkeyup = function (event){
                 document.querySelector('.wins').innerHTML = wins;
                 document.getElementById('dinopic').innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
                 document.getElementById('figcaption').innerHTML = newWord;
+                document.querySelector('audio').play();
                 console.log(newWord)
                 set();
                 
