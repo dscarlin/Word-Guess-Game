@@ -44,7 +44,7 @@ const dinopad = document.querySelector('.dinopad');
 const audio = document.querySelector('audio');
 //div for displaying wins 
 const winsDiv = document.querySelector('.wins');
-const event = document.event;
+
 
 
 //------------------------------------------ FUNCTIONS ------------------------------------------------//
