@@ -224,7 +224,7 @@ hangWord.addEventListener('touchend', openKeyboard);
 
 //Gameplay
 //main function for key event
-document.addEventListener('keyup', playGame);
+document.addEventListener('keypress', playGame);
 
 
 //Auxillary UI experience -- cpu
