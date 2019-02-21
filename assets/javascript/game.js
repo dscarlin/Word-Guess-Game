@@ -225,8 +225,8 @@ document.addEventListener('keyup', playGame);
 
 
 //Auxillary UI experience -- cpu
-dinopad.addEventListener('mouseover', dinoAction);
-dinopad.addEventListener('mouseout', dinoReturn);
+dinopic.addEventListener('mouseover', dinoAction);
+dinopic.addEventListener('mouseout', dinoReturn);
 dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
