@@ -225,14 +225,14 @@ document.addEventListener('keyup', playGame);
 
 
 //Auxillary UI experience -- cpu
-dinopic.addEventListener('mouseover', dinoAction);
-dinopic.addEventListener('mouseout', dinoReturn);
+dinopad.addEventListener('mouseover', dinoAction);
+dinopad.addEventListener('mouseout', dinoReturn);
 dinopic.ondblclick = roar;
 
 //Auxillary UI experience -- mobile
-dinopad.addEventListener('touchstart', dinoAction);
-//document.body.addEventListener('touchstart', dinoReturn);
-dinopad.addEventListener('touchend', dinoReturn );
+//dinopad.addEventListener('touchstart', dinoAction);
+document.body.addEventListener('touchstart', dinoReturn);
+//dinopad.addEventListener('touchend', dinoReturn );
 dinopad.addEventListener('touchstart', roar);
 
 
