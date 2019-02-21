@@ -67,6 +67,8 @@ document.querySelector('img');
 
         //sets up game screen between rounds
         function set(){
+            //clear guessed letters
+            guessLetters=[]
             //clear guess letter div
             document.querySelector('.letters').innerHTML= "Letters Already Guessed: " + guessLetters;
             //starting guesses
