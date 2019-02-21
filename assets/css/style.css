@@ -11,7 +11,8 @@
     background-size:contain;
     overflow:auto;
     min-width: 320px;
-    min-height: 400px;
+/*     min-height: 400px; */
+
   
 
     
@@ -55,7 +56,7 @@
     transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1);
     position:absolute;
     width: 50vh;
-    bottom:20rem;
+    bottom:30vh;
 }
 
 h1{
@@ -67,7 +68,10 @@ h1{
     -webkit-text-fill-color: transparent;
 }
 
-
+.relative{
+    positon:relative;
+    width:100%;
+}
 h3{
     font-size:15vw;
     color: #5f1804;
@@ -82,13 +86,14 @@ h3{
 }
 img{
     width: 100%;
+    max-width: 80vw;
 }
 
 #figcaption{
     color:white;
     transform: rotateX(60deg) rotateZ(-30deg) ;
     position:absolute;
-    bottom:16rem;    
+    bottom:20vh;    
     font-size: 6vh;
     transition: .6s;
     width:fit-content;

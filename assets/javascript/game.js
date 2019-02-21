@@ -44,6 +44,7 @@ const dinopad = document.querySelector('.dinopad');
 const audio = document.querySelector('audio');
 //div for displaying wins 
 const winsDiv = document.querySelector('.wins');
+document.querySelector('img');
 
 
 
@@ -110,7 +111,7 @@ const winsDiv = document.querySelector('.wins');
 
         function dinoAction(){
             dinopic.style.transition = ".6s";
-            dinopic.style.transform = "scale(1.4)";
+            dinopic.style.transform = "scale(1.2)";
             figcaption.style.color = "orange";
             figcaption.style.textDecoration = "underline";
             figcaption.style.background = "#0f77d24d";
@@ -225,15 +226,15 @@ document.addEventListener('keyup', playGame);
 
 
 //Auxillary UI experience -- cpu
-dinopad.addEventListener('mouseover', dinoAction);
-dinopad.addEventListener('mouseout', dinoReturn);
-dinopic.ondblclick = roar;
+dinopic.addEventListener('mouseover', dinoAction);
+dinopic.addEventListener('mouseout', dinoReturn);
+dinopic.onclick = roar;
 
 //Auxillary UI experience -- mobile
 //dinopad.addEventListener('touchstart', dinoAction);
-document.body.addEventListener('touchstart', dinoReturn);
+document.body.addEventListener('touchend', dinoReturn);
 //dinopad.addEventListener('touchend', dinoReturn );
-dinopad.addEventListener('touchstart', roar);
+dinopic.addEventListener('touchend', roar);
 
 
 
