@@ -1,64 +1,9 @@
-
-.col{
-    border: green dotted .5em;
-    color: white;
-    font-size: 1.25em;
-    top:1vh;
-}
-
- body{
+body{
     background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40);
     background-size:contain;
     overflow:auto;
-    min-width: 320px;
-/*     min-height: 400px; */
-
-  
-
-    
-   
+    min-width: 320px;  
 }
-.grass{
-    background-image: url('../images/grass.jpg');
-    background-size:contain;
-    padding: 0;
-    transform:rotateX(60deg);
-    transform-origin:bottom;
-    display:inline-block;
-    position: static; 
-    bottom:0;
-    height: 70vh;
-
-}
-#dummy{
-   opacity: 0;
-   overflow: hidden;
-   cursor:default;
-   caret-color: transparent;
-} 
-
-
-
-
-.header{
-    position:relative;
-    top:1vh;
-
-}
-
-.dinopad{
-    height:auto;
-    transition: .6s;
-    padding:0;    
-}
-
-#dinopic{
-    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1);
-    position:absolute;
-    width: 50vh;
-    bottom:30vh;
-}
-
 h1{
     top: 5vh; 
     font-family: 'Hanalei Fill',arial;
@@ -67,10 +12,8 @@ h1{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
-.relative{
-    positon:relative;
-    width:100%;
+h2{
+    font-size: 6vw;
 }
 h3{
     font-size:15vw;
@@ -80,15 +23,41 @@ h3{
     left:30vw;
     transform: rotateZ(-20deg) rotateY(30deg);
     opacity: .6;
-    font-family: 'Shadows Into Light', 'cursive';
-     
-     
+    font-family: 'Shadows Into Light', 'cursive';    
 }
 img{
     width: 100%;
     max-width: 80vw;
 }
-
+#dummy{
+    opacity: 0;
+    overflow: hidden;
+    cursor:default;
+    caret-color: transparent;
+ } 
+ #header{
+     position:relative;
+     top:1vh;
+ }
+ #board{
+    border: green dotted .5em;
+    color: white;
+    font-size: 1.25em;
+    top:1vh;
+    font-size: 3vw;
+    margin-top: 1rem;
+}
+#dinopad{
+    height:auto;
+    transition: .6s;
+    padding:0;    
+}
+#dinopic{
+    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1);
+    position:absolute;
+    width: 50vh;
+    bottom:30vh;
+}
 #figcaption{
     color:white;
     transform: rotateX(60deg) rotateZ(-30deg) ;
@@ -99,7 +68,17 @@ img{
     width:fit-content;
     display:inline-block;
 }
-
+#grass{
+    background-image: url('../images/grass.jpg');
+    background-size:contain;
+    padding: 0;
+    transform:rotateX(60deg);
+    transform-origin:bottom;
+    display:inline-block;
+    position: static; 
+    bottom:0;
+    height: 75vh;
+}
 
 
 

@@ -14,7 +14,7 @@
    <input id="dummy" autocomplete="off" autocorrect="off"></input>
    <div class="container-fluid">
        <div class="row">
-           <div class="header container-fluid text-center">
+           <div id="header" class="container-fluid text-center">
                <h1>Hangman</h1>
                <h3>Dinosaur</h3>
            </div>
@@ -22,24 +22,22 @@
    </div>
    <div class="container">
         <div class="row justify-content-center">
-            <div class="col col-sm-8 col-lg-6 ">
+            <div id="board" class="col-xs-10 col-lg-10 ">
                 <div class="container-fluid ">
-                    <div class="container-fluid text-center" ><h4>Press any key to get started!</h4></div>
-                    <div class="row">Wins</div>
-                    <div class="row wins"></div>
-                    <!-- <div class="container-fluid text-center">Current Word</div> -->
-                    <h4 class="container-fluid text-center hangword"></h4>
-                    <div class="row guesses">Guesses left</div>   
-                    <div class="row letters">Letters Already Guessed</div>
+                    <div id="instruct" class="container-fluid text-center" ><h4></h4></div>
+                    <h2  id="hangword" class="container-fluid text-center"></h2>
+                    <div id="wins" class="row"></div>
+                    <div id="guesses" class="row"></div>   
+                    <div id="letters" class="row"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid grass">
-    <div class="container dinopad">  
+    <div id="grass" class="container-fluid">
+    <div id="dinopad" class="container">  
         <div class="relative">
-        <div id="dinopic" class="container-fluid dinopic"></div>
-        <div class="cap" id='figcaption'></div>
+        <div id="dinopic" class="container-fluid"></div>
+        <div  id="figcaption"></div>
         </div>
     </div>
     <audio>
