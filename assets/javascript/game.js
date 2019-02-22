@@ -233,22 +233,183 @@ const instruct = document.querySelector('#instruct')
                             wins++;
                             //print wins
                             winsDiv.innerHTML = "Wins: " + wins;
+                            roar();
+                            stars();
                             dinopic.innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
                             figcaption.innerHTML = newWord;
                             hangWord.style.color = "orange";
-                            hangword.style.textDecoration = "underline"
+                            hangword.style.textDecoration = "underline";
                             }
                         }
                     }
                 }
             else{
-                roar();
                 console.log(newWord);
                 set();   
                 }    
             }
-        
-        
+        //-------------- win func ----------//
+        function stars(){   
+            var stage = new PIXI.Container();
+            console.log(stage);
+            var renderer = PIXI.autoDetectRenderer(window.innerWidth-4, window.innerHeight-4, );
+            console.log(renderer);
+            var _stars = [], _glows = [];
+            var _nextStar = 0;
+            var width, height, fontSize, textPixels, yOffset;
+            var textCanvas, textCtx;
+
+            var percent = 0;
+            document.body.appendChild(renderer.view);
+            renderer.render(stage);
+            initCanvas();
+
+            function begin(){
+            resize();
+            requestAnimationFrame( animate );
+            };    
+
+            var textures = [
+            PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star.png"),
+            PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star1.png"),
+            PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star2.png"),
+            PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star3.png"),
+            PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star4.png")
+            ];
+
+            //create stars
+            for (var i = 0; i < 600; i++) {
+            createStar(textures[i%5]);
+            console.log(i%5);
+            }
+
+
+            function createStar(text) {
+            var star = new PIXI.Sprite(text);
+            console.log("firststar: "+star)
+            star.width = 5 + Math.random()*20;
+            console.log(star.width);
+            star.height = 5 + Math.random()*20;
+            star.anchor.x = 0.5;
+            console.log(star.anchor.x);
+            star.anchor.y = 0.5;
+            
+            stage.addChild(star);
+            star.alpha = 0;
+            star.launched = false;
+            _stars.push(star);
+            console.log(_stars)
+            
+            
+            }
+
+            launchStar();
+
+            function launchStar() {
+            var star = _stars[_nextStar];
+            console.log("star: " +star); 
+            _nextStar = _nextStar == _stars.length-1 ? 0 : _nextStar + 1;
+            star.launched = true;
+            star.alpha = 1;
+            var pos = textPixels[Math.floor(Math.random()*textPixels.length)];
+            star.position.x = pos.x;
+            star.position.y = yOffset + pos.y;
+            
+            star.vx = 1 + Math.random()*1;
+            star.vy = -1 + Math.random()*-1;
+            star.vr = -0.2 + Math.random()*0.4;
+            star.p = 0;
+            
+            };
+
+
+
+            function launchStarBatch() {
+            for (var i = 0; i < 6; i++) {
+                launchStar();
+                
+            }
+            };
+            
+            function animate() {
+            launchStarBatch();
+            console.log("tarbatch laucnhed ------------------------------")
+            requestAnimationFrame( animate );
+            for (var i = 0; i < _stars.length; i++) {
+                if(_stars[i].launched) {
+                console.log("launched star --------------------------")
+                var angle = Math.PI * (1-_stars[i].p);
+                _stars[i].rotation += _stars[i].vr;
+                _stars[i].position.x += _stars[i].vx + 0.5 * Math.cos(angle) + _stars[i].vx;
+                _stars[i].position.y += _stars[i].vy + 0.5 * Math.sin(angle) + _stars[i].vy; 
+                // _stars[i].vy += 0.04;
+                _stars[i].p += _stars[i].vr;
+                _stars[i].alpha -= 0.01;
+                }
+            }
+            
+            
+            
+            // render the stage   
+           
+            }
+
+            // canvas
+            function initCanvas() {
+            textCanvas = document.getElementById('text');
+            console.log(textCanvas);
+            textCtx = textCanvas.getContext('2d');
+            console.log(textCtx)
+            begin();
+            }
+
+            function sampleCanvas() {
+            textCtx.textAlign = 'center';
+            textCtx.textBaseline = "top";
+            textCtx.font = fontSize+'px "arial"';
+            textCtx.fillStyle = 'aliceblue';
+            
+            textCtx.fillText('tyrannosaurus', width / 2, 0);
+
+            var pix = textCtx.getImageData(0, 0, width, height).data;
+            console.log("pix length: "+pix.length)
+            textPixels = [];
+            for (var i = pix.length; i >= 0; i -= 4) {
+                if (pix[i] != 0) {
+                var x = (i / 4) % width;
+                var y = Math.floor(Math.floor(i / width) / 4);
+
+                if ((x && x % 6 == 0) && (y && y % 6 == 0)) textPixels.push({
+                    x: x,
+                    y: y
+                });
+                }
+            }
+            console.log(textPixels)
+            }
+
+            window.addEventListener('resize', resize);
+
+
+
+            function resize() {
+            width = window.innerWidth;
+            console.log("width: "+width)
+            height = window.innerHeight;
+            console.log("height: "+height)
+
+            fontSize = width*0.14;
+            if (fontSize > 50) fontSize = 50;
+            yOffset = height*0.6 - (fontSize/2);
+            renderer.resize(width, height);
+            
+            sampleCanvas();
+            }
+
+            
+
+
+            }
 //------------------------------------- GAME PLAY ACTIONS ----------------------------------------------//
 
 
@@ -257,7 +418,7 @@ const instruct = document.querySelector('#instruct')
 set()
 alert('Welcome to Dinosaur Hangman!\n\nFor mobile => touch the empty blanks to open your keypad.')
 roar();
-
+console.log(PIXI);
 //initialize mobile keyboard
 
 hangWord.addEventListener('touchend', mobileSetup);
