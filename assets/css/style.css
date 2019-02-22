@@ -40,30 +40,37 @@ img{
      top:1vh;
  }
  #board{
-    border: green dotted .5em;
-    color: white;
-    font-size: 1.25em;
-    top:1vh;
+    background-color: #ffffff10;
+    border: green  .5em;
+    border-radius: 3rem;
+    color:white;
     font-size: 3vw;
-    margin-top: 1rem;
+    margin-top: 2rem;
+    box-shadow: white 0rem 0rem 20rem 2rem;
+    padding: 1rem;
 }
 #dinopad{
     height:auto;
     transition: .6s;
-    padding:0;    
+    padding:0; 
+       
 }
 #dinopic{
-    transform: rotateZ(-15deg) rotateY(60deg) rotateX(-20deg) scale(1);
+    transform: rotateZ(-15deg) rotateY(75deg) rotateX(-18deg) scale(1);
     position:absolute;
-    width: 50vh;
-    bottom:30vh;
+    width: 80vw;
+    max-width: 6000px;
+    bottom:60vh;
+    left: 7vh
 }
 #figcaption{
     color:white;
     transform: rotateX(60deg) rotateZ(-30deg) ;
     position:absolute;
-    bottom:20vh;    
-    font-size: 6vh;
+    bottom:50vh; 
+    left: 7vh;   
+    font-size: 10vw;
+    max-font-size: 72pt;
     transition: .6s;
     width:fit-content;
     display:inline-block;
@@ -80,7 +87,17 @@ img{
     height: 75vh;
 }
 
+@media only screen and (min-width: 900px){
 
+    #dinopic{
+        width: 90vh
+    }
+    #figcaption{
+       
+        font-size: 6rem;
+        font-weight: bold;
+    }
+}
 
 
 
