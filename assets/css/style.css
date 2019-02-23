@@ -1,8 +1,25 @@
 body{
-    background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40);
-    background-size:contain;
+    background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40);    background-size:contain;
     overflow:auto;
-    min-width: 320px;  
+    min-width: 320px; 
+    
+}
+#stars{
+  position: relative;
+   
+    
+}
+canvas{
+   display:inline;
+/*    float:left; */
+   bottom: 0;
+   position: absolute;
+   left: 5vw;
+   Z-index:-1;
+/*    border-bottom-left-radius: 3em; */
+/*    border-bottom-right-radius: 3em; */
+   
+
 }
 h1{
     top: 5vh; 
@@ -10,7 +27,9 @@ h1{
     font-size: 15vw;
     background: linear-gradient(blue, yellow);
     -webkit-background-clip: text;
+    background-clip:text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 h2{
     font-size: 6vw;
@@ -28,16 +47,18 @@ h3{
 img{
     width: 100%;
     max-width: 80vw;
+    
 }
 /* #hangword{
     position:absolute;
     z-index:10;
 } */
 #text{
-    z-index: 200;
+    /* z-index: 200;
     position: absolute;
-    
-    /* display:none; */
+    left: 0; */
+   
+    display:none;
 }
 #dummy{
     opacity: 0;
@@ -51,6 +72,7 @@ img{
  }
  #board{
     background-color: #ffffff10;
+    font-family: 'Hanalei Fill',arial;
     border: green  .5em;
     border-radius: 3rem;
     color:white;
@@ -58,12 +80,12 @@ img{
     margin-top: 2rem;
     box-shadow: white 0rem 0rem 20rem 2rem;
     padding: 1rem;
+    z-index:0;
 }
 #dinopad{
     height:auto;
     transition: .6s;
     padding:0; 
-       
 }
 #dinopic{
     transform: rotateZ(-15deg) rotateY(75deg) rotateX(-18deg) scale(1);
@@ -71,7 +93,8 @@ img{
     width: 80vw;
     max-width: 6000px;
     bottom:60vh;
-    left: 7vh
+    left: 7vh;
+    z-index:1;
 }
 #figcaption{
     color:white;
@@ -80,10 +103,10 @@ img{
     bottom:50vh; 
     left: 7vh;   
     font-size: 10vw;
-    max-font-size: 72pt;
     transition: .6s;
     width:fit-content;
     display:inline-block;
+    z-index:2;
 }
 #grass{
     background-image: url('../images/grass.jpg');
@@ -91,7 +114,7 @@ img{
     padding: 0;
     transform:rotateX(60deg);
     transform-origin:bottom;
-    display:inline-block;
+/*     display:inline-block; */
     position: static; 
     bottom:0;
     height: 75vh;
@@ -103,8 +126,8 @@ img{
         width: 90vh
     }
     #figcaption{
-       
-        font-size: 6rem;
+        top:1em;
+        font-size: 12vh;
         font-weight: bold;
     }
 }
