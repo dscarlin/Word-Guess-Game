@@ -9,17 +9,23 @@ body{
    
     
 }
+canvas:nth-of-type(1){
+    left: 5vw;
+}
+canvas:nth-of-type(2){
+    left:0;
+    right:0;
+   
+}
 canvas{
-   display:inline;
-/*    float:left; */
+   /* display:inline; */
+   /*    float:left; */
    bottom: 0;
    position: absolute;
    left: 5vw;
    Z-index:-1;
-/*    border-bottom-left-radius: 3em; */
-/*    border-bottom-right-radius: 3em; */
-   
-
+   /*    border-bottom-left-radius: 3em; */
+   /*    border-bottom-right-radius: 3em; */
 }
 h1{
     top: 5vh; 
@@ -42,7 +48,8 @@ h3{
     left:30vw;
     transform: rotateZ(-20deg) rotateY(30deg);
     opacity: .6;
-    font-family: 'Shadows Into Light', 'cursive';    
+    font-family: 'Shadows Into Light', 'cursive'; 
+   
 }
 img{
     width: 100%;
@@ -69,6 +76,7 @@ img{
  #header{
      position:relative;
      top:1vh;
+     z-index: -1;
  }
  #board{
     background-color: #ffffff10;

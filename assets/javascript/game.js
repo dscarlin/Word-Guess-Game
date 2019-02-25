@@ -22,6 +22,8 @@ const wordBank = []
 
 //----------- gameplay variables -----------//
 let wins = 0;
+
+let losses = 0;
 //letters already guessed
 let guessLetters = [];
 //number of guesses left per round
@@ -36,6 +38,19 @@ let str;
 let joinStr;
 //stores html from hangword with spaces removed for comparing to new word
 let compare;
+
+let killStars;
+
+let firstStarRun = 1;
+
+let notFirstRun = 0;
+
+let dinoTalk = new SpeechSynthesisUtterance()
+
+var delayInMilliseconds = 5000; //5 seconds
+
+
+
 
 
 
@@ -52,6 +67,8 @@ const dinopad = document.querySelector('#dinopad');
 const audio = document.querySelector('audio');
 //div for displaying wins 
 const winsDiv = document.querySelector('#wins');
+
+const lossDiv = document.querySelector('#losses')
 //div for letters already guessed
 const letters = document.querySelector('#letters')
 //div for number of guesses left
@@ -60,8 +77,26 @@ const guessLeft = document.querySelector('#guesses')
 const instruct = document.querySelector('#instruct')
 // container for star rendering canvas
 const starContainer = document.querySelector('#stars')
-//old child placeholder for star canvas
-var oldChild;
+
+const synth = window.speechSynthesis;
+
+let voices;
+//placeholder for star canvas
+let displayCanvas;
+//element containing stars to be displayed on canvas
+let stage;
+//star canvas
+let renderer;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -69,8 +104,25 @@ var oldChild;
 //------------------------------------------ FUNCTIONS ------------------------------------------------//
 
 //------------------- functions for game set ------------//
+
+
+        //load namelist for speech
+        
+        function getVoices() {
+            console.log("getVoices___________");
+            voices = window.speechSynthesis.getVoices();
+            console.log("voices" +voices)
+            dinoTalk.voice = voices[48];
+            dinoTalk.lang= "en-US";
+            dinoTalk.pitch = 1.1;
+            dinoTalk.rate = .65;
+            dinoTalk.volume =  1;
+            
+            
+           
+            };
         //random number variable for index of wordBank
-        function rand(){
+         function rand(){
             return Math.floor(Math.random()*wordBank.length);
             }
 
@@ -84,13 +136,21 @@ var oldChild;
 
         //sets up game screen between rounds
         function set(){
+            if (notFirstRun){
+                displayCanvas = starContainer.firstChild
+                displayCanvas.remove();
+                }
+            else{
+
+            }
+            notFirstRun = 1;
             //normalize board style for gameplay
-            hangWord.style.color = "white"
-            hangWord.style.textDecoration = "unset"
+            hangWord.style.color = "white";
+            hangWord.style.textDecoration = "unset";
             //print instructions
-            instruct.innerHTML = "Press any key to get started!"
+            instruct.innerHTML = "Press any key to get started!";
             //clear guessed letters
-            guessLetters=[]
+            guessLetters=[];
             //clear guess letter div
             letters.innerHTML= "Letters Already Guessed: " + guessLetters;
             //starting guesses
@@ -139,7 +199,13 @@ var oldChild;
 
 
         //--- auxilary UI event handler funcs ----//
-
+        function dinoAppear(){
+            dinopad.style.display = "contents"
+            }
+        
+        function dinoHide(){
+            dinopad.style.display = "none"
+            }
         function dinoAction(){
             dinopic.style.transition = ".6s";
             dinopic.style.transform = "scale(1.2)";
@@ -148,6 +214,7 @@ var oldChild;
             figcaption.style.background = "#0f77d24d";
             figcaption.style.transform = "rotate(0)"
             dinopad.style.bottom = "5rem";
+            talk();
             }
 
         function dinoReturn(){
@@ -158,6 +225,12 @@ var oldChild;
             figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
             dinopad.style.bottom = "unset";
             }
+        
+        function dinoTouch(){
+            dinoAction();
+            setTimeout(dinoReturn, 2000);
+            synth.cancel();
+            }
 
         function roar(){
             audio.play()
@@ -165,7 +238,20 @@ var oldChild;
         
         function preventMouseover(){
             dinopic.removeEventListener('onmouseover', dinoAction);
+            dinopic.removeEventListener('onmouseout', dinoReturn);
+
             }
+
+        
+
+        function talk() {
+            dinoTalk.text = newWord;
+            console.log(talk);
+            synth.speak(dinoTalk);
+            
+        }
+
+
 
 
         //--------- gameplay event func -----------//
@@ -187,6 +273,9 @@ var oldChild;
                             //check if out of guesses
                             if (guesses<1){
                                 alert("You are out of Guesses! The game will restart after closing this box.");
+                                losses++;
+                                lossDiv.innerHTML = "Losses: " + losses;
+
                                 set();}
                             //if still have guesses left
                             else {
@@ -239,7 +328,9 @@ var oldChild;
                             //print wins
                             winsDiv.innerHTML = "Wins: " + wins;
                             //boolean for toggling stars func
-                            runStars = true;
+                            killStars = 0;
+                            dinoAppear();
+                            // dinopic.focus();
                             roar();
                             stars();
                             dinopic.innerHTML = '<img   src="'+ dinosaurCollection[newWord]+'" alt="dinosaur picture"/>';
@@ -252,7 +343,8 @@ var oldChild;
                     }
                 }
             else{
-                runStars = false;
+                dinoHide();
+                killStars = 1;
                 console.log(newWord);
                 set();   
                 }    
@@ -260,36 +352,35 @@ var oldChild;
         //-------------- win func ----------//
         function stars(){
             
-            
-var stage, renderer;          
-var _stars = [], _glows = [];
+var initial = 1 
+var _stars = [];
 var _nextStar = 0;
-var width, height, fontSize, textPixels, yOffset;
-var textCanvas, textCtx;
-// var htmlText = document.getElementById("stars");
-//var starContainer = document.querySelector('#stars')
+var  height, fontSize, textPixels, yOffset;
+var textCanvas, textCtx, canvasCtx, request;
 var percent = 0;
+var width = document.body.clientWidth
 
+if (firstStarRun){
+// stage.clear()
+stage = new PIXI.Container();
+renderer = PIXI.autoDetectRenderer(document.body.clientWidth-4, document.body.clientWidth-4, {transparent: true});
 
-
-
-if(oldChild){
-    starContianer.prepend(oldChild);
-}   
+canvas = starContainer.prepend(renderer.view);
+firststarRun = 0
+}
 else{
-    stage = new PIXI.Container();
-    renderer = PIXI.autoDetectRenderer(document.body.clientWidth-4, document.body.clientWidth-4, {transparent: true});
-    canvas = starContainer.prepend(renderer.view);
-    
-}  
 
+canvas = displayCanvas
+starContainer.prepend(canvas)
 
+}
+// canvasCtx = canvas.getContext('2d');
 
 initCanvas();
 
 function begin() {
   resize();
-  requestAnimationFrame( animate );
+  request = requestAnimationFrame( animate );
 }
 //star img bank
 var textures = [
@@ -299,20 +390,23 @@ var textures = [
   PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star3.png"),
   PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star4.png")
 ]
-
+makeStars();
+function makeStars(){
 //iterates through textures creating 600 alternating color stars put into array
 for (var i = 0; i < 600; i++) {
   createStar(textures[i%5]);
 }
-
+}
 
 //creates one star element and adds it to an array
 function createStar(text) {
-  var star = new PIXI.Sprite(text);
-  star.width = 5 + Math.random()*30;
-  star.height = 5 + Math.random()*30;
-  star.anchor.x = 0.5;
-  star.anchor.y = 0.5;
+  var star = new PIXI.Sprite(text); 
+  console.log(width*0.05);
+  var sizeOffset = width*0.05;
+  star.width = 5 + Math.random()*sizeOffset;
+  star.height = 5 + Math.random()*sizeOffset;
+  star.anchor.x = .5;
+  star.anchor.y =.5; 
   
   stage.addChild(star);
   star.alpha = 0;
@@ -340,14 +434,20 @@ function launchStar() {
 
 
 function launchStarBatch() {
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 1; i++) {
     launchStar();
   }
 }
 
 function animate() {
+  if (killStars){
+    window.removeEventListener('resize', resize);
+    return;
+  }
+
   launchStarBatch();
-  requestAnimationFrame( animate );
+ request = requestAnimationFrame( animate );
+  
   for (var i = 0; i < _stars.length; i++) {
     if(_stars[i].launched) {
       var angle = Math.PI * (1-_stars[i].p);
@@ -360,32 +460,14 @@ function animate() {
     }
   }
   
-  for (var i = 0; i < _glows.length; i++) {
-    if(_glows[i].launched) {
-      _glows[i].position.x += _glows[i].vx;
-      _glows[i].position.y += _glows[i].vy; 
+ 
       
-      if (_glows[i].position.y < 0) {
-        _glows[i].position.x = Math.random()*width;
-        _glows[i].position.y = height + Math.random()*50;
-      }
-      if (_glows[i].position.x > width) {
-        _glows[i].position.x = -Math.random()*100;
-        _glows[i].position.y = height*Math.random();
-      }
-      
-    }
-  }
-  if (!runStars){
     
-    oldChild = document.querySelector('canvas')
-    oldChild.remove();
-    window.removeEventListener('resize', resize);
+  
+  
 
-    return;}
-
-  // render the stage   
-  renderer.render(stage);
+// render the stage   
+ renderer.render(stage);
 }
 
 // canvas
@@ -413,7 +495,7 @@ function sampleCanvas() {
   for (var i = pix.length; i >= 0; i -= 4) {
     if (pix[i] != 0) {
       var x = (i / 4) % width;
-      var y = Math.floor(Math.floor(i / width) / 4);
+      var y = Math.floor(Math.floor(i / height) / 4);
 
       if ((x && x % 6 == 0) && (y && y % 6 == 0)) textPixels.push({
         x: x,
@@ -433,17 +515,31 @@ window.addEventListener('resize', resize);
 
  function resize() {
   width = document.body.clientWidth;
+//   width = parseFloat(width)*0.95;
   console.log(width);
   height = document.body.clientHeight;
   console.log(height);
   fontSize = width*0.058;
 //   if (fontSize > 100) fontSize = 100;
   //yOffset = height*0.8 - (fontSize/2);
-  yOffset = height;;
-  renderer.resize(width, height);
+  yOffset = height;
+  renderer.resize(width*0.95, height);
 //   resizeText();
   sampleCanvas();
-}
+  if (initial == false){
+    cancelAnimationFrame(request);
+    _stars = [];
+    console.log ("_stars: "+ _stars.length)
+    for (var i = stage.children.length - 1; i >= 0; i--) {	
+        stage.removeChild(stage.children[i]);
+        };
+    makeStars();
+    request = requestAnimationFrame(animate);
+    }
+  else{
+    initial = 0;
+    }
+  }
 
 WebFont.load({
   google: {
@@ -459,9 +555,14 @@ WebFont.load({
 //---------- Set Initial Board---------------//
 
 set()
+setTimeout(getVoices, delayInMilliseconds);
 alert('Welcome to Dinosaur Hangman!\n\nFor mobile => touch the empty blanks to open your keypad.')
 roar();
+
 console.log(PIXI);
+//listen for async speech synthesis load complete
+// synth.onvoiceschanged = getVoices(); 
+
 //initialize mobile keyboard
 
 hangWord.addEventListener('touchend', mobileSetup);
@@ -472,15 +573,15 @@ hangWord.addEventListener('touchend', mobileSetup);
 document.addEventListener('keypress', playGame);
 
 //Auxillary UI experience -- cpu 
-dinopic.addEventListener('mouseover', dinoAction)
+dinopic.addEventListener('mouseover', dinoAction);
 dinopic.addEventListener('mouseout', dinoReturn);
 dinopic.onclick = roar;
 
 //Auxillary UI experience -- mobile 
-dinopic.addEventListener('touchend', dinoAction);
-document.body.addEventListener('touchend', dinoReturn);
+dinopic.addEventListener('touchend', dinoTouch);
+// document.body.addEventListener('touchend', dinoReturn);
 //dinopad.addEventListener('touchend', dinoReturn );
-dinopic.addEventListener('touchend', roar);
+dinopic.addEventListener('touchend', talk);
 
 
 
