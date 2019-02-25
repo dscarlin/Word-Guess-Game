@@ -224,12 +224,12 @@ let renderer;
             figcaption.style.background = "unset";
             figcaption.style.transform = "rotateX(60deg) rotateZ(-30deg)";
             dinopad.style.bottom = "unset";
+            synth.cancel();
             }
         
         function dinoTouch(){
             dinoAction();
             setTimeout(dinoReturn, 2000);
-            synth.cancel();
             }
 
         function roar(){
