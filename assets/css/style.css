@@ -2,30 +2,6 @@ body{
     background: linear-gradient(whitesmoke,rgba(0, 184, 255, 0.4),#505be2eb,#59a259, #406f40);    background-size:contain;
     overflow:auto;
     min-width: 320px; 
-    
-}
-#stars{
-  position: relative;
-   
-    
-}
-canvas:nth-of-type(1){
-    left: 5vw;
-}
-canvas:nth-of-type(2){
-    left:0;
-    right:0;
-   
-}
-canvas{
-   /* display:inline; */
-   /*    float:left; */
-   bottom: 0;
-   position: absolute;
-   left: 5vw;
-   Z-index:-1;
-   /*    border-bottom-left-radius: 3em; */
-   /*    border-bottom-right-radius: 3em; */
 }
 h1{
     top: 5vh; 
@@ -49,22 +25,12 @@ h3{
     transform: rotateZ(-20deg) rotateY(30deg);
     opacity: .6;
     font-family: 'Shadows Into Light', 'cursive'; 
-   
 }
 img{
     width: 100%;
     max-width: 80vw;
-    
 }
-/* #hangword{
-    position:absolute;
-    z-index:10;
-} */
 #text{
-    /* z-index: 200;
-    position: absolute;
-    left: 0; */
-   
     display:none;
 }
 #dummy{
@@ -115,6 +81,7 @@ img{
     width:fit-content;
     display:inline-block;
     z-index:2;
+    font-weight: bold;
 }
 #grass{
     background-image: url('../images/grass.jpg');
@@ -122,11 +89,26 @@ img{
     padding: 0;
     transform:rotateX(60deg);
     transform-origin:bottom;
-/*     display:inline-block; */
     position: static; 
     bottom:0;
     height: 75vh;
 }
+#stars{
+    position: relative;   
+  }
+  canvas:nth-of-type(1){
+      left: 5vw;
+  }
+  canvas:nth-of-type(2){
+      left:0;
+      right:0;
+  }
+  canvas{
+     bottom: 0;
+     position: absolute;
+     left: 5vw;
+     Z-index:-1;
+  }
 
 @media only screen and (min-width: 900px){
 
@@ -136,7 +118,6 @@ img{
     #figcaption{
         top:1em;
         font-size: 12vh;
-        font-weight: bold;
     }
 }
 

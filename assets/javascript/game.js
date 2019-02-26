@@ -38,15 +38,13 @@ let str;
 let joinStr;
 //stores html from hangword with spaces removed for comparing to new word
 let compare;
-
+//kill switch for recursive function (animate) inside stars function
 let killStars;
-
+//boolean for creating or re-using elements in stars function
 let firstStarRun = 1;
-
-let notFirstRun = 0;
-
+//speech synthesis event to be defined by properties in get voices function
 let dinoTalk = new SpeechSynthesisUtterance()
-
+//set timeout variable for get voices function
 var delayInMilliseconds = 5000; //5 seconds
 
 
@@ -67,7 +65,7 @@ const dinopad = document.querySelector('#dinopad');
 const audio = document.querySelector('audio');
 //div for displaying wins 
 const winsDiv = document.querySelector('#wins');
-
+//div for displaying losses
 const lossDiv = document.querySelector('#losses')
 //div for letters already guessed
 const letters = document.querySelector('#letters')
@@ -77,9 +75,9 @@ const guessLeft = document.querySelector('#guesses')
 const instruct = document.querySelector('#instruct')
 // container for star rendering canvas
 const starContainer = document.querySelector('#stars')
-
+//speech synthesis 
 const synth = window.speechSynthesis;
-
+//container for speech synth voice list object
 let voices;
 //placeholder for star canvas
 let displayCanvas;
@@ -90,24 +88,12 @@ let renderer;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //------------------------------------------ FUNCTIONS ------------------------------------------------//
 
 //------------------- functions for game set ------------//
 
 
         //load namelist for speech
-        
         function getVoices() {
             console.log("getVoices___________");
             voices = window.speechSynthesis.getVoices();
@@ -117,10 +103,8 @@ let renderer;
             dinoTalk.pitch = 1.1;
             dinoTalk.rate = .65;
             dinoTalk.volume =  1;
-            
-            
-           
             };
+
         //random number variable for index of wordBank
          function rand(){
             return Math.floor(Math.random()*wordBank.length);
@@ -136,14 +120,10 @@ let renderer;
 
         //sets up game screen between rounds
         function set(){
-            if (notFirstRun){
+            if (wins >= 1){
                 displayCanvas = starContainer.firstChild
                 displayCanvas.remove();
                 }
-            else{
-
-            }
-            notFirstRun = 1;
             //normalize board style for gameplay
             hangWord.style.color = "white";
             hangWord.style.textDecoration = "unset";
@@ -239,19 +219,14 @@ let renderer;
         function preventMouseover(){
             dinopic.removeEventListener('onmouseover', dinoAction);
             dinopic.removeEventListener('onmouseout', dinoReturn);
-
+            dinopic.removeEventListener('click', roar);
             }
-
-        
 
         function talk() {
             dinoTalk.text = newWord;
             console.log(talk);
             synth.speak(dinoTalk);
-            
-        }
-
-
+            }
 
 
         //--------- gameplay event func -----------//
@@ -351,202 +326,175 @@ let renderer;
             }
         //-------------- win func ----------//
         function stars(){
-            
-var initial = 1 
-var _stars = [];
-var _nextStar = 0;
-var  height, fontSize, textPixels, yOffset;
-var textCanvas, textCtx, canvasCtx, request;
-var percent = 0;
-var width = document.body.clientWidth
 
-if (firstStarRun){
-// stage.clear()
-stage = new PIXI.Container();
-renderer = PIXI.autoDetectRenderer(document.body.clientWidth-4, document.body.clientWidth-4, {transparent: true});
+           //---------- variables ----------// 
+            var initial = 1 
+            var _stars = [];
+            var _nextStar = 0;
+            var  height, fontSize, textPixels, yOffset;
+            var textCanvas, textCtx, canvasCtx, request;
+            var width = document.body.clientWidth
+            //star img bank
+            var textures = [
+              PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star.png"),
+              PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star1.png"),
+              PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star2.png"),
+              PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star3.png"),
+              PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star4.png")
+            ]
 
-canvas = starContainer.prepend(renderer.view);
-firststarRun = 0
-}
-else{
+            //---------- functions ----------//
 
-canvas = displayCanvas
-starContainer.prepend(canvas)
+            function begin() {
+              resize();
+              request = requestAnimationFrame( animate );
+              }
 
-}
-// canvasCtx = canvas.getContext('2d');
+            function makeStars(){
+              //iterates through textures creating 600 alternating color stars put into array
+              for (var i = 0; i < 600; i++) {
+                createStar(textures[i%5]);
+                }
+              }
 
-initCanvas();
+            //creates one star element and adds it to an array
+            function createStar(text) {
+              var star = new PIXI.Sprite(text); 
+              console.log(width*0.05);
+              var sizeOffset = width*0.05;
+              star.width = 5 + Math.random()*sizeOffset;
+              star.height = 5 + Math.random()*sizeOffset;
+              star.anchor.x = .5;
+              star.anchor.y =.5; 
+              stage.addChild(star);
+              star.alpha = 0;
+              star.launched = false;
+              _stars.push(star);
+              }
 
-function begin() {
-  resize();
-  request = requestAnimationFrame( animate );
-}
-//star img bank
-var textures = [
-  PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star.png"),
-  PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star1.png"),
-  PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star2.png"),
-  PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star3.png"),
-  PIXI.Texture.fromImage("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/neon-star4.png")
-]
-makeStars();
-function makeStars(){
-//iterates through textures creating 600 alternating color stars put into array
-for (var i = 0; i < 600; i++) {
-  createStar(textures[i%5]);
-}
-}
+            function launchStar() {
+              var star = _stars[_nextStar];
+                //uses ternary to continually loop through _stars array
+              _nextStar = _nextStar == _stars.length-1 ? 0 : _nextStar + 1;
+              star.launched = true;
+              star.alpha = 1;
+              var pos = textPixels[Math.floor(Math.random()*textPixels.length)];
+              star.position.x = pos.x;
+              star.position.y = yOffset + pos.y;
+              
+              star.vx = 1 + Math.random()*1;
+              star.vy = -1 + Math.random()*-1;
+              star.vr = -0.2 + Math.random()*0.4;
+              star.p = 0;
+              }
 
-//creates one star element and adds it to an array
-function createStar(text) {
-  var star = new PIXI.Sprite(text); 
-  console.log(width*0.05);
-  var sizeOffset = width*0.05;
-  star.width = 5 + Math.random()*sizeOffset;
-  star.height = 5 + Math.random()*sizeOffset;
-  star.anchor.x = .5;
-  star.anchor.y =.5; 
-  
-  stage.addChild(star);
-  star.alpha = 0;
-  star.launched = false;
-  _stars.push(star);
-}
+            function launchStarBatch() {
+              for (var i = 0; i < 1; i++) {
+                launchStar();
+                }
+              }
 
+            function animate() {
+              if (killStars){
+                window.removeEventListener('resize', resize);
+                return;
+                }
+              launchStarBatch();
+              request = requestAnimationFrame( animate );
+              for (var i = 0; i < _stars.length; i++) {
+                if(_stars[i].launched) {
+                  var angle = Math.PI * (1-_stars[i].p);
+                  _stars[i].rotation += _stars[i].vr;
+                  _stars[i].position.x += _stars[i].vx + 0.5 * Math.cos(angle) + _stars[i].vx ;
+                  _stars[i].position.y += _stars[i].vy + 0.5 * Math.sin(angle) + _stars[i].vy; 
+                  _stars[i].p += _stars[i].vr;
+                  _stars[i].alpha -= 0.01;
+                  }
+                }
+              // render the stage   
+              renderer.render(stage);
+              }
 
+            // canvas
+            function initCanvas() {
+              textCanvas = document.getElementById('text');
+              textCtx = textCanvas.getContext('2d');
+            }
 
-function launchStar() {
-  var star = _stars[_nextStar];
-    //uses ternary to continually loop through _stars array
-  _nextStar = _nextStar == _stars.length-1 ? 0 : _nextStar + 1;
-  star.launched = true;
-  star.alpha = 1;
-  var pos = textPixels[Math.floor(Math.random()*textPixels.length)];
-  star.position.x = pos.x;
-  star.position.y = yOffset + pos.y;
-  
-  star.vx = 1 + Math.random()*1;
-  star.vy = -1 + Math.random()*-1;
-  star.vr = -0.2 + Math.random()*0.4;
-  star.p = 0;
-}
+            function sampleCanvas() {
+              textCanvas.style.width = width + 'px';
+              textCanvas.style.height = fontSize + 'px';
+              textCanvas.style.marginTop = -(fontSize/2) + 'px';
+              textCanvas.width = width;
+              textCanvas.height = fontSize;
+              textCtx.textAlign = 'center';
+              textCtx.textBaseline = "top";
+              textCtx.font = fontSize + "px 'Hanalei Fill'";
+              textCtx.fillStyle = '#eee';
+              textCtx.clearRect(0, 0, width, height);
+              textCtx.fillText(joinStr, width/2.5,0, width);
 
+              var pix = textCtx.getImageData(0, 0, width, height).data;
+              textPixels = [];
+              for (var i = pix.length; i >= 0; i -= 4) {
+                if (pix[i] != 0) {
+                  var x = (i / 4) % width;
+                  var y = Math.floor(Math.floor(i / height) / 4);
 
-function launchStarBatch() {
-  for (var i = 0; i < 1; i++) {
-    launchStar();
-  }
-}
+                  if ((x && x % 6 == 0) && (y && y % 6 == 0)) textPixels.push({
+                    x: x,
+                    y: y
+                    });
+                  }
+                }
+              }
 
-function animate() {
-  if (killStars){
-    window.removeEventListener('resize', resize);
-    return;
-  }
+            function resize() {
+              width = document.body.clientWidth;
+              console.log(width);
+              height = document.body.clientHeight;
+              console.log(height);
+              fontSize = width*0.058;
+              yOffset = height;
+              renderer.resize(width*0.95, height);
+              sampleCanvas();
+              if (initial == false){
+                cancelAnimationFrame(request);
+                _stars = [];
+                console.log ("_stars: "+ _stars.length)
+                for (var i = stage.children.length - 1; i >= 0; i--) {	
+                    stage.removeChild(stage.children[i]);
+                    };
+                makeStars();
+                request = requestAnimationFrame(animate);
+                }
+              else{
+                initial = 0;
+                }
+              }
 
-  launchStarBatch();
- request = requestAnimationFrame( animate );
-  
-  for (var i = 0; i < _stars.length; i++) {
-    if(_stars[i].launched) {
-      var angle = Math.PI * (1-_stars[i].p);
-      _stars[i].rotation += _stars[i].vr;
-      _stars[i].position.x += _stars[i].vx + 0.5 * Math.cos(angle) + _stars[i].vx ;
-      _stars[i].position.y += _stars[i].vy + 0.5 * Math.sin(angle) + _stars[i].vy; 
-      // _stars[i].vy += 0.04;
-      _stars[i].p += _stars[i].vr;
-      _stars[i].alpha -= 0.01;
-    }
-  }
-  
- 
-      
-    
-  
-  
+              //-------------- events -------------//
+            WebFont.load({
+              google: {
+                families: ['Luckiest Guy']
+              },
+              active: begin
+              });
 
-// render the stage   
- renderer.render(stage);
-}
+            if (firstStarRun){
+              stage = new PIXI.Container();
+              renderer = PIXI.autoDetectRenderer(document.body.clientWidth-4, document.body.clientWidth-4, {transparent: true});
+              canvas = starContainer.prepend(renderer.view);
+              firststarRun = 0
+              }
+            else{
+              canvas = displayCanvas
+              starContainer.prepend(canvas)
+              }
 
-// canvas
-function initCanvas() {
-  textCanvas = document.getElementById('text');
-  textCtx = textCanvas.getContext('2d');
-}
-
-function sampleCanvas() {
-  textCanvas.style.width = width + 'px';
-  textCanvas.style.height = fontSize + 'px';
-  textCanvas.style.marginTop = -(fontSize/2) + 'px';
-  textCanvas.width = width;
-  textCanvas.height = fontSize;
-  textCtx.textAlign = 'center';
-  textCtx.textBaseline = "top";
-  textCtx.font = fontSize + "px 'Hanalei Fill'";
-  textCtx.fillStyle = '#eee';
-  textCtx.clearRect(0, 0, width, height);
-  
-  textCtx.fillText(joinStr, width/2.5,0, width);
-
-  var pix = textCtx.getImageData(0, 0, width, height).data;
-  textPixels = [];
-  for (var i = pix.length; i >= 0; i -= 4) {
-    if (pix[i] != 0) {
-      var x = (i / 4) % width;
-      var y = Math.floor(Math.floor(i / height) / 4);
-
-      if ((x && x % 6 == 0) && (y && y % 6 == 0)) textPixels.push({
-        x: x,
-        y: y
-      });
-    }
-  }
-}
-
-// function resizeText() {
-//   htmlText.style.fontSize = fontSize+'px';
-//   htmlText.style.height = fontSize+'px';
-//   htmlText.style.marginTop = -(fontSize/2)+'px';
-// }
-
-window.addEventListener('resize', resize);
-
- function resize() {
-  width = document.body.clientWidth;
-//   width = parseFloat(width)*0.95;
-  console.log(width);
-  height = document.body.clientHeight;
-  console.log(height);
-  fontSize = width*0.058;
-//   if (fontSize > 100) fontSize = 100;
-  //yOffset = height*0.8 - (fontSize/2);
-  yOffset = height;
-  renderer.resize(width*0.95, height);
-//   resizeText();
-  sampleCanvas();
-  if (initial == false){
-    cancelAnimationFrame(request);
-    _stars = [];
-    console.log ("_stars: "+ _stars.length)
-    for (var i = stage.children.length - 1; i >= 0; i--) {	
-        stage.removeChild(stage.children[i]);
-        };
-    makeStars();
-    request = requestAnimationFrame(animate);
-    }
-  else{
-    initial = 0;
-    }
-  }
-
-WebFont.load({
-  google: {
-    families: ['Luckiest Guy']
-  },
-  active: begin
-});
+              initCanvas();
+              makeStars();
+              window.addEventListener('resize', resize);
 
             }
 //------------------------------------- GAME PLAY ACTIONS ----------------------------------------------//
@@ -575,12 +523,10 @@ document.addEventListener('keypress', playGame);
 //Auxillary UI experience -- cpu 
 dinopic.addEventListener('mouseover', dinoAction);
 dinopic.addEventListener('mouseout', dinoReturn);
-dinopic.onclick = roar;
+dinopic.addEventListener('click', roar);
 
 //Auxillary UI experience -- mobile 
 dinopic.addEventListener('touchend', dinoTouch);
-// document.body.addEventListener('touchend', dinoReturn);
-//dinopad.addEventListener('touchend', dinoReturn );
 dinopic.addEventListener('touchend', talk);
 
 
