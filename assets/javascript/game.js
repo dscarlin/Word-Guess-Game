@@ -238,7 +238,8 @@ let renderer;
        
         function playGame(event){
             if (touched)
-              event.key = event.data
+              event.key = input.value
+              document.getElementById('dummy').innerText = ""
             if (newWord!==compare){
                 //clear instructions
                 instruct.innerHTML = ""
