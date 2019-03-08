@@ -47,6 +47,8 @@ let dinoTalk = new SpeechSynthesisUtterance()
 //set timeout variable for get voices function
 var delayInMilliseconds = 5000; //5 seconds
 
+var touched = false
+
 
 
 
@@ -174,7 +176,10 @@ let renderer;
             }
 
         function openKeyboard(){
-            document.getElementById('dummy').focus()
+            var dummy = document.getElementById('dummy')
+            dummy.focus()
+            document.removeEventListener('keypress', playGame)
+            dummy.addEventListener('input', playGame)
             };
 
 
@@ -232,10 +237,12 @@ let renderer;
         //--------- gameplay event func -----------//
        
         function playGame(event){
+            if (touched)
+              event.key = event.data
             if (newWord!==compare){
                 //clear instructions
                 instruct.innerHTML = ""
-                console.log("event key:"+ event.key);
+                console.log("event key:"+ event.data);
                 //capitalize key letter for comparison
                 const capLetter = event.key.toUpperCase();
                 console.log("capLetter: "+capLetter);
@@ -504,7 +511,7 @@ let renderer;
 
 set()
 setTimeout(getVoices, delayInMilliseconds);
-alert('Welcome to Dinosaur Hangman!\n\nFor mobile => touch the empty blanks to open your keypad.')
+(alert('Welcome to Dinosaur Hangman!\n\nFor mobile => touch the empty blanks to open your keypad.'));
 roar();
 
 console.log(PIXI);
@@ -518,7 +525,7 @@ hangWord.addEventListener('touchend', mobileSetup);
 //------------------------------- Gameplay -------------------------------------//
 
 //MAIN FUNCTION - listener for key event
-document.addEventListener('keypress', playGame);
+document.addEventListener('keyup', playGame);
 
 //Auxillary UI experience -- cpu 
 dinopic.addEventListener('mouseover', dinoAction);
